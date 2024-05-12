@@ -1,0 +1,7 @@
+.idea
+.env
+.venv
+*/**/__pychache__
+Generator/__pycache__/
+Generator/migrations/__pycache__/
+Menu/__pycache__/
