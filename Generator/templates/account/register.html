@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Registration {% endblock %}
+
+{% block content %}
+    <h1> Menu generator </h1>
+
+    <h2>Create new account</h2>
+
+    <form action="{% url 'Generator:register' %}" method="post">
+        {{form.as_p}}
+        {% csrf_token %}
+        <button class="btn btn-primary">Create account</button>
+        <a href="{% url 'Generator:login' %}" class="btn btn-secondary">Back to login</a>
+    </form>
+{% endblock %}
