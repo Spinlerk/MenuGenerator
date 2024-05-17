@@ -33,13 +33,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "Generator.apps.GeneratorConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "Generator.apps.GeneratorConfig",
+
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = 'Generator:dashboard'
 LOGIN_URL = 'Generator:login'
 LOGOUT_URL = 'Generator:logout'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} Login {% endblock %}
+{% block title %} Dashboard {% endblock %}
 
 {% block content %}
     <h1> Menu generator </h1>
@@ -12,5 +12,6 @@
         <input type="hidden" name="next" value="{{ next }}">
         <button class="btn btn-primary">Login</button>
         <a href="{% url 'Generator:register' %}" class="btn btn-secondary">Don´t have an account yet?</a>
+        <a href="{% url 'Generator:password_reset' %}" class="btn btn-secondary">Reset your password</a>
     </form>
 {% endblock %}
