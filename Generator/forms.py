@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-
+from .models import UserMainCourse, UserSalad, UserSideDishes, UserSoup
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
@@ -16,3 +16,23 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
 
         return cd['password2']
+
+class UserMainCourseForm(forms.ModelForm):
+    class Meta:
+        model = UserMainCourse
+        fields = ['name', 'description']
+
+class UserSaladForm(forms.ModelForm):
+    class Meta:
+        model = UserSalad
+        fields = ['name', 'description']
+
+class UserSideDishesForm(forms.ModelForm):
+    class Meta:
+        model = UserSideDishes
+        fields = ['name', 'description']
+
+class UserSoupForm(forms.ModelForm):
+    class Meta:
+        model = UserSoup
+        fields = ['name', 'description']
