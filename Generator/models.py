@@ -14,7 +14,6 @@ class CentralMainCourse(models.Model):
 """ User tables will be cloned from Central tables when new user is created. """
 class UserMainCourse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Main_courses')
-    central_main_course = models.ForeignKey(CentralMainCourse, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,7 +35,6 @@ class CentralSoup(models.Model):
 
 class UserSoup(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='Soup')
-    central_soup = models.ForeignKey(CentralSoup, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -59,7 +57,6 @@ class CentralSalad(models.Model):
 
 class UserSalad(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='Salad')
-    central_salad = models.ForeignKey(CentralSalad, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -79,7 +76,6 @@ class CentralSideDishes(models.Model):
 
 class UserSideDishes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='SideDishes')
-    central_side_dishes = models.ForeignKey(CentralSideDishes, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
