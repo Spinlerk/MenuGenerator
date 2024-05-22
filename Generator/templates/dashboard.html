@@ -2,12 +2,15 @@
 {% block title %} Dashboard {% endblock %}
 
 {% block content %}
-    <h1>Menu Generator</h1>
+    <h1>Menu Creator</h1>
 
     <form action="{% url 'Generator:logout' %}" method="post">
         {% csrf_token %}
         <button class="btn btn-primary">Log out</button>
     </form>
 
+    <a href="{% url 'Generator:main_courses' %}" class="btn btn-primary">Main courses</a>
+    
+    
     <a href="{% url 'Generator:password_change' %}">Change password</a>
 {% endblock %}

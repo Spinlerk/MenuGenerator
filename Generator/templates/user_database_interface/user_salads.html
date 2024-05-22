@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Your Main Course</h1>
+    <ul>
+        {for main_course in main_courses %}
+         <li>
+            {{ main_course.name }}: {{ main_course.description }}
+            <br>
+            Created at:  {{ main_course.created_at }}
+            <br>    
+            Updated at: {{ main_course.updated_at }}
+            <br>
+            <a href="{% url 'edit_user_main_course' 'main_course.id' %}">Edit</a>    
+         </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

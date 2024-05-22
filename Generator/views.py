@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import UserMainCourse, UserSoup, UserSalad, UserSideDishes
 from .forms import UserRegistrationForm, UserMainCourseForm, UserSoupForm, UserSaladForm, UserSideDishesForm
@@ -32,7 +33,7 @@ def register(request):
 @login_required
 def user_main_courses(request):
     main_courses = UserMainCourse.objects.filter(user=request.user)
-    return render(request, 'user_main_courses.html', {'main_courses': main_courses})
+    return render(request, 'user_database_interface/user_main_courses.html', {'main_courses': main_courses})
 
 
 @login_required
@@ -46,7 +47,7 @@ def add_main_course(request):
             return redirect('user_main_courses')
     else:
         form = UserMainCourseForm()
-    return render(request, 'add_main_course.html')
+    return render(request, 'user_database_interface/add_main_course.html', {'form': form})
 
 
 @login_required
@@ -56,36 +57,39 @@ def edit_user_main_courses(request, course_id):
         form = UserMainCourseForm(request.POST, instance=main_course)
         if form.is_valid():
             form.save()
-            return redirect('user_main_courses')
+            return redirect('Generator:user_main_courses')
 
     else:
         form = UserMainCourseForm(instance=main_course)
-    return render(request, edit_user_main_courses.html, {'form': form})
+    return render(request, 'user_database_interface/edit_main_course.html', {
+        'form': form,
+        'main_course': main_course
+    })
 
-
-@login_required
-def delete_user_main_course(request, id):
-    main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
-    if request.method == 'POST':
-        main_course.delete()
-        return redirect('user_main_courses')
-    return render(request, 'confirm_delete.html', {'main_course': main_course})
-
-# """ prepared delete for modal"""
 
 # @login_required
 # def delete_user_main_course(request, id):
 #     main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
-#     main_course.delete()
-#
-#     return HttpResponse("ok")
+#     if request.method == 'POST':
+#         main_course.delete()
+#         return redirect('user_main_courses')
+#     return render(request, 'user_database_interface/confirm_delete.html', {'main_course': main_course})
+
+""" delete modal"""
+
+@login_required
+def delete_user_main_course(request, id):
+    main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
+    main_course.delete()
+
+    return HttpResponse("ok")
 
 """ Views for user soups """
 
 @login_required
 def user_soups(request):
     soups = UserSoup.objects.filter(user=request.user)
-    return render(request, 'user_soups.html', {'soups': soups})
+    return render(request, 'user_database_interface/user_soups.html', {'soups': soups})
 
 
 @login_required
@@ -99,7 +103,7 @@ def add_user_soup(request):
             return redirect('user_soups')
     else:
         form = UserSoupForm()
-    return render(request, 'add_soup.html')
+    return render(request, 'user_database_interface/add_soup.html')
 
 
 @login_required
@@ -113,7 +117,7 @@ def edit_user_soup(request, course_id):
 
     else:
         form = UserSoupForm(instance=soup)
-    return render(request, 'edit_user_soup.html', {'form': form})
+    return render(request, 'user_database_interface/edit_user_soup.html', {'form': form})
 
 
 def delete_user_soup(request, id):
@@ -121,7 +125,7 @@ def delete_user_soup(request, id):
     if request.method == 'POST':
         soup.delete()
         return redirect('user_soups')
-    return render(request, 'confirm_delete.html', {'soup': soup})
+    return render(request, 'user_database_interface/confirm_delete.html', {'soup': soup})
 
 
 # """ prepared delete for modal"""
@@ -140,7 +144,7 @@ def delete_user_soup(request, id):
 @login_required
 def user_salads(request):
     salads = UserSalad.objects.filter(user=request.user)
-    return render(request, 'user_salads.html', {'salads': salads})
+    return render(request, 'user_database_interface/user_salads.html', {'salads': salads})
 
 
 @login_required
@@ -154,7 +158,7 @@ def add_user_salad(request):
             return redirect('user_salads')
     else:
         form = UserSaladForm()
-    return render(request, 'add_salad.html')
+    return render(request, 'user_database_interface/add_salad.html')
 
 
 @login_required
@@ -168,7 +172,7 @@ def edit_user_salad(request, course_id):
 
     else:
         form = UserSaladForm(instance=salad)
-    return render(request, 'edit_user_soup.html', {'form': form})
+    return render(request, 'user_database_interface/edit_user_soup.html', {'form': form})
 
 
 def delete_user_salad(request, id):
@@ -176,7 +180,7 @@ def delete_user_salad(request, id):
     if request.method == 'POST':
         salad.delete()
         return redirect('user_salads')
-    return render(request, 'confirm_delete.html', {'user_salad': salad})
+    return render(request, 'user_database_interface/confirm_delete.html', {'user_salad': salad})
 
 # """ prepared delete for modal"""
 
@@ -193,7 +197,7 @@ def delete_user_salad(request, id):
 @login_required
 def user_side_dishes(request):
     side_dishes = UserSideDishes.objects.filter(user=request.user)
-    return render(request, 'user_side_dishes.html', {'side_dishes': side_dishes})
+    return render(request, 'user_database_interface/user_side_dishes.html', {'side_dishes': side_dishes})
 
 
 @login_required
@@ -207,7 +211,7 @@ def add_user_side_dish(request):
             return redirect('user_side_dishes')
     else:
         form = UserSaladForm()
-    return render(request, 'add_side_dish.html')
+    return render(request, 'user_database_interface/add_side_dish.html')
 
 
 @login_required
@@ -221,7 +225,7 @@ def edit_user_side_dish(request, course_id):
 
     else:
         form = UserSideDishesForm(instance=user_side_dish)
-    return render(request, 'edit_user_soup.html', {'form': form})
+    return render(request, 'user_database_interface/edit_side_dish.html', {'form': form})
 
 
 def delete_user_side_dish(request, id):
@@ -229,7 +233,7 @@ def delete_user_side_dish(request, id):
     if request.method == 'POST':
         user_side_dish.delete()
         return redirect('user_side_dishes')
-    return render(request, 'confirm_delete.html', {'user_side_dish': user_side_dish})
+    return render(request, 'user_database_interface/confirm_delete.html', {'user_side_dish': user_side_dish})
 
 # """ prepared delete for modal"""
 
