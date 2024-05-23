@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %} Soups {% endblock %}
+
+{% block content %}
+
+    <h1>Your Soups</h1>
+
+    <ul>
+        {% for soup in soups %}
+            <div id="soup-{{ soup.id }}">
+                <div>{{ soup.name }}</div>
+
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup">Delete</button>
+
+                {% include "modals/delete_soup.html" with id=soup.id %}
+                <a href="{% url 'Generator:edit_soup' id=soup.id %}" class="btn btn-primary">Edit</a>
+            </div>
+        {% endfor %}
+
+        <a href="{% url 'Generator:soup' %}" class="btn btn-primary">Add soup</a>
+
+{% endblock %}

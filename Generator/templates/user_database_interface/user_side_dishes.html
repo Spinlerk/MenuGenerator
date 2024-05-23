@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %} Side dishes {% endblock %}
+
+{% block content %}
+
+    <h1>Your Side dishes</h1>
+
+    <ul>
+        {% for side_dish in side_dishes %}
+            <div id="side_dish-{{ side_dish.id }}">
+                <div>{{ side_dish.name }}</div>
+
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-side_dish">Delete</button>
+
+                {% include "modals/delete_side_dish.html" with id=side_dish.id %}
+                <a href="{% url 'Generator:edit_side_dish' id=side_dish.id %}" class="btn btn-primary">Edit</a>
+            </div>
+        {% endfor %}
+
+        <a href="{% url 'Generator:side_dish' %}" class="btn btn-primary">Add side dish</a>
+
+{% endblock %}

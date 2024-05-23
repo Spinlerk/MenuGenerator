@@ -117,7 +117,7 @@ def edit_user_soup(request, id):
 
     else:
         form = UserSoupForm(instance=soup)
-    return render(request, 'user_database_interface/edit_user_soup.html', {
+    return render(request, 'user_database_interface/edit_soup.html', {
         'form': form,
         'soup': soup
     })
@@ -175,7 +175,7 @@ def edit_user_salad(request, id):
 
     else:
         form = UserSaladForm(instance=salad)
-    return render(request, 'user_database_interface/edit_user_soup.html', {
+    return render(request, 'user_database_interface/edit_soup.html', {
         'form': form,
         'salad': salad
     })
@@ -222,18 +222,18 @@ def add_user_side_dish(request):
 
 @login_required
 def edit_user_side_dish(request, id):
-    user_side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
+    side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
     if request.method == 'POST':
-        form = UserSideDishesForm(request.POST, instance=user_side_dish)
+        form = UserSideDishesForm(request.POST, instance=side_dish)
         if form.is_valid():
             form.save()
             return redirect('Generator:user_side_dishes')
 
     else:
-        form = UserSideDishesForm(instance=user_side_dish)
+        form = UserSideDishesForm(instance=side_dish)
     return render(request, 'user_database_interface/edit_side_dish.html', {
         'form': form,
-        'user_side_dish': user_side_dish
+        'side_dish': side_dish
     })
 
 

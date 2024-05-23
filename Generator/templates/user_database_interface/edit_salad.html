@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit Side dish</h1>
-    <form method="post" action="{% url 'Generator:edit_side_dish' id=side_dish.id %}">
+    <h1>Edit Salad</h1>
+    <form method="post" action="{% url 'Generator:edit_salad' id=salad %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-primary">Save</button>

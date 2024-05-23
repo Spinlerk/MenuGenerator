@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 
+{% block title %} Salads {% endblock %}
+
 {% block content %}
 
-    <h1>Your Main Course</h1>
+    <h1>Your Salads</h1>
+
     <ul>
-        {for main_course in main_courses %}
-         <li>
-            {{ main_course.name }}: {{ main_course.description }}
-            <br>
-            Created at:  {{ main_course.created_at }}
-            <br>    
-            Updated at: {{ main_course.updated_at }}
-            <br>
-            <a href="{% url 'edit_user_main_course' 'main_course.id' %}">Edit</a>    
-         </li>
+        {% for salad in salads %}
+            <div id="salad-{{ salad.id }}">
+                <div>{{ salad.name }}</div>
+
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-salad">Delete</button>
+
+                {% include "modals/delete_salad.html" with id=salad.id %}
+                <a href="{% url 'Generator:edit_salad' id=salad.id %}" class="btn btn-primary">Edit</a>
+            </div>
         {% endfor %}
-    </ul>
+
+        <a href="{% url 'Generator:salad' %}" class="btn btn-primary">Add salad</a>
+
 {% endblock %}
