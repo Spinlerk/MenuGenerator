@@ -2,9 +2,9 @@
 
 {% block content %}
     <h1>Edit Main Course</h1>
-    <form method="post" action="{% url 'edit_main_course' course_id=main_course.id %}">
+    <form method="post" action="{% url 'Generator:edit_main_course' id=main_course.id %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-submit">Save</button>
+        <button class="btn btn-primary">Save</button>
     </form>
 {% endblock %}

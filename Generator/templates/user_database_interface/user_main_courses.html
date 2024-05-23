@@ -5,14 +5,19 @@
 {% block content %}
 
 <h1>Your Main Course</h1>
+    
 <ul>
     {% for main_course in main_courses %}
         <div id="main-course-{{ main_course.id }}">
             <div>{{ main_course.name }}</div>
-{#            <a href="{% url 'Generator:edit_main_course' %}" class="btn btn-primary">Edit</a>#}
+            
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-main-course">Delete</button>
 
             {% include "modals/delete_main_course.html" with id=main_course.id %}
+            <a href="{% url 'Generator:edit_main_course' id=main_course.id %}" class="btn btn-primary">Edit</a>
         </div>
     {% endfor %}
+
+    <a href="{% url 'Generator:add_main_course' %}" class="btn btn-primary">Add main course</a>
+
 {% endblock %}

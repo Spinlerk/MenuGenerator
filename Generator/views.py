@@ -44,26 +44,26 @@ def add_main_course(request):
             new_main_course = form.save(commit=False)
             new_main_course.user = request.user
             new_main_course.save()
-            return redirect('user_main_courses')
+            return redirect('Generator:main_courses')
     else:
         form = UserMainCourseForm()
     return render(request, 'user_database_interface/add_main_course.html', {'form': form})
 
 
 @login_required
-def edit_user_main_courses(request, course_id):
-    main_course = get_object_or_404(UserMainCourse, id=course_id, user=request.user)
+def edit_user_main_courses(request, id):
+    main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
     if request.method == 'POST':
         form = UserMainCourseForm(request.POST, instance=main_course)
         if form.is_valid():
             form.save()
-            return redirect('Generator:user_main_courses')
+            return redirect('Generator:main_courses')
 
     else:
         form = UserMainCourseForm(instance=main_course)
     return render(request, 'user_database_interface/edit_main_course.html', {
-        'form': form,
-        'main_course': main_course
+                    'form': form,
+                    'main_course': main_course
     })
 
 
@@ -100,31 +100,34 @@ def add_user_soup(request):
             new_soup = form.save(commit=False)
             new_soup.user = request.user
             new_soup.save()
-            return redirect('user_soups')
+            return redirect('Generator:user_soups')
     else:
         form = UserSoupForm()
     return render(request, 'user_database_interface/add_soup.html')
 
 
 @login_required
-def edit_user_soup(request, course_id):
-    soup = get_object_or_404(UserSoup, id=course_id, user=request.user)
+def edit_user_soup(request, id):
+    soup = get_object_or_404(UserSoup, id=id, user=request.user)
     if request.method == 'POST':
         form = UserSoupForm(request.POST, instance=soup)
         if form.is_valid():
             form.save()
-            return redirect('user_soups')
+            return redirect('Generator:user_soups')
 
     else:
         form = UserSoupForm(instance=soup)
-    return render(request, 'user_database_interface/edit_user_soup.html', {'form': form})
+    return render(request, 'user_database_interface/edit_user_soup.html', {
+        'form': form,
+        'soup': soup
+    })
 
 
 def delete_user_soup(request, id):
     soup = get_object_or_404(UserSoup, id=id, user=request.user)
     if request.method == 'POST':
         soup.delete()
-        return redirect('user_soups')
+        return redirect('Generator:user_soups')
     return render(request, 'user_database_interface/confirm_delete.html', {'soup': soup})
 
 
@@ -155,31 +158,34 @@ def add_user_salad(request):
             new_salad = form.save(commit=False)
             new_salad.user = request.user
             new_salad.save()
-            return redirect('user_salads')
+            return redirect('Generator:user_salads')
     else:
         form = UserSaladForm()
     return render(request, 'user_database_interface/add_salad.html')
 
 
 @login_required
-def edit_user_salad(request, course_id):
-    salad = get_object_or_404(UserSalad, id=course_id, user=request.user)
+def edit_user_salad(request, id):
+    salad = get_object_or_404(UserSalad, id=id, user=request.user)
     if request.method == 'POST':
         form = UserSaladForm(request.POST, instance=salad)
         if form.is_valid():
             form.save()
-            return redirect('user_salads')
+            return redirect('Generator:user_salads')
 
     else:
         form = UserSaladForm(instance=salad)
-    return render(request, 'user_database_interface/edit_user_soup.html', {'form': form})
+    return render(request, 'user_database_interface/edit_user_soup.html', {
+        'form': form,
+        'salad': salad
+    })
 
 
 def delete_user_salad(request, id):
     salad = get_object_or_404(UserSalad, id=id, user=request.user)
     if request.method == 'POST':
         salad.delete()
-        return redirect('user_salads')
+        return redirect('Generator:user_salads')
     return render(request, 'user_database_interface/confirm_delete.html', {'user_salad': salad})
 
 # """ prepared delete for modal"""
@@ -208,31 +214,34 @@ def add_user_side_dish(request):
             new_side_dish = form.save(commit=False)
             new_side_dish.user = request.user
             new_side_dish.save()
-            return redirect('user_side_dishes')
+            return redirect('Generator:user_side_dishes')
     else:
         form = UserSaladForm()
     return render(request, 'user_database_interface/add_side_dish.html')
 
 
 @login_required
-def edit_user_side_dish(request, course_id):
-    user_side_dish = get_object_or_404(UserSideDishes, id=course_id, user=request.user)
+def edit_user_side_dish(request, id):
+    user_side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
     if request.method == 'POST':
         form = UserSideDishesForm(request.POST, instance=user_side_dish)
         if form.is_valid():
             form.save()
-            return redirect('user_side_dishes')
+            return redirect('Generator:user_side_dishes')
 
     else:
         form = UserSideDishesForm(instance=user_side_dish)
-    return render(request, 'user_database_interface/edit_side_dish.html', {'form': form})
+    return render(request, 'user_database_interface/edit_side_dish.html', {
+        'form': form,
+        'user_side_dish': user_side_dish
+    })
 
 
 def delete_user_side_dish(request, id):
     user_side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
     if request.method == 'POST':
         user_side_dish.delete()
-        return redirect('user_side_dishes')
+        return redirect('Generator:user_side_dishes')
     return render(request, 'user_database_interface/confirm_delete.html', {'user_side_dish': user_side_dish})
 
 # """ prepared delete for modal"""
