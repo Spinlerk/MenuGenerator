@@ -105,7 +105,7 @@ def edit_user_soup(request, id):
         form = UserSoupForm(request.POST, instance=soup)
         if form.is_valid():
             form.save()
-            return redirect('Generator:user_soups')
+            return redirect('Generator:soups')
 
     else:
         form = UserSoupForm(instance=soup)
@@ -142,7 +142,7 @@ def add_user_salad(request):
             new_salad = form.save(commit=False)
             new_salad.user = request.user
             new_salad.save()
-            return redirect('Generator:user_salads')
+            return redirect('Generator:salads')
     else:
         form = UserSaladForm()
     return render(request, 'user_database_interface/add_salad.html', {'form': form})
@@ -155,31 +155,24 @@ def edit_user_salad(request, id):
         form = UserSaladForm(request.POST, instance=salad)
         if form.is_valid():
             form.save()
-            return redirect('Generator:user_salads')
+            return redirect('Generator:salads')
 
     else:
         form = UserSaladForm(instance=salad)
-    return render(request, 'user_database_interface/edit_soup.html', {
+    return render(request, 'user_database_interface/edit_salad.html', {
         'form': form,
         'salad': salad
     })
 
 
+""" prepared delete for modal"""
+
+@login_required
 def delete_user_salad(request, id):
     salad = get_object_or_404(UserSalad, id=id, user=request.user)
-    if request.method == 'POST':
-        salad.delete()
-        return redirect('Generator:user_salads')
-    return render(request, 'user_database_interface/confirm_delete.html', {'user_salad': salad})
+    salad.delete()
 
-# """ prepared delete for modal"""
-
-# @login_required
-# def delete_user_main_course(request, id):
-#     main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
-#     main_course.delete()
-#
-#     return HttpResponse("ok")
+    return HttpResponse("ok")
 
 
 """ Views for user side dishes """
@@ -220,13 +213,6 @@ def edit_user_side_dish(request, id):
         'side_dish': side_dish
     })
 
-
-def delete_user_side_dish(request, id):
-    user_side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
-    if request.method == 'POST':
-        user_side_dish.delete()
-        return redirect('Generator:user_side_dishes')
-    return render(request, 'user_database_interface/confirm_delete.html', {'user_side_dish': user_side_dish})
 
 # """ prepared delete for modal"""
 

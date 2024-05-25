@@ -3,21 +3,20 @@
 {% block title %} Salads {% endblock %}
 
 {% block content %}
+    
+<h1>Your Salads</h1>
 
-    <h1>Your Salads</h1>
+<ul>
+    {% for salad in salads %}
+        <div id="salad-{{ salad.id }}">
+            <div>{{ salad.name }}</div>
 
-    <ul>
-        {% for salad in salads %}
-            <div id="salad-{{ salad.id }}">
-                <div>{{ salad.name }}</div>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-salad">Delete</button>
 
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-salad">Delete</button>
+            {% include "modals/delete_salad.html" with id=salad.id %}
+            <a href="{% url 'Generator:edit_salad' id=salad.id %}" class="btn btn-primary">Edit</a>
+        </div>
+    {% endfor %}
 
-                {% include "modals/delete_salad.html" with id=salad.id %}
-                <a href="{% url 'Generator:edit_salad' id=salad.id %}" class="btn btn-primary">Edit</a>
-            </div>
-        {% endfor %}
-
-        <a href="{% url 'Generator:salad' %}" class="btn btn-primary">Add salad</a>
-
+    <a href="{% url 'Generator:add_salad' %}" class="btn btn-primary">Add salad</a>
 {% endblock %}
