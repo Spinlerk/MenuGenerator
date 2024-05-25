@@ -6,7 +6,7 @@
     
 <h1>Your Salads</h1>
 
-<ul>
+
     {% for salad in salads %}
         <div id="salad-{{ salad.id }}">
             <div>{{ salad.name }}</div>
@@ -19,4 +19,5 @@
     {% endfor %}
 
     <a href="{% url 'Generator:add_salad' %}" class="btn btn-primary">Add salad</a>
+    <a href="{% url 'Generator:dashboard' %}" class="btn btn-secondary">Back</a>
 {% endblock %}

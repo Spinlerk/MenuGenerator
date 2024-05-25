@@ -7,5 +7,6 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-primary">Add</button>
+        <a href="{% url 'Generator:soups' %}" class="btn btn-secondary">Back</a>
     </form>
 {% endblock %}

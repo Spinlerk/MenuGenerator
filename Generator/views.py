@@ -92,7 +92,7 @@ def add_user_soup(request):
             new_soup = form.save(commit=False)
             new_soup.user = request.user
             new_soup.save()
-            return redirect('Generator:user_soups')
+            return redirect('Generator:soups')
     else:
         form = UserSoupForm()
     return render(request, 'user_database_interface/add_soup.html',{'form': form})
@@ -191,9 +191,9 @@ def add_user_side_dish(request):
             new_side_dish = form.save(commit=False)
             new_side_dish.user = request.user
             new_side_dish.save()
-            return redirect('Generator:user_side_dishes')
+            return redirect('Generator:side_dishes')
     else:
-        form = UserSaladForm()
+        form = UserSideDishesForm()
     return render(request, 'user_database_interface/add_side_dish.html', {'form': form})
 
 
@@ -204,7 +204,7 @@ def edit_user_side_dish(request, id):
         form = UserSideDishesForm(request.POST, instance=side_dish)
         if form.is_valid():
             form.save()
-            return redirect('Generator:user_side_dishes')
+            return redirect('Generator:side_dishes')
 
     else:
         form = UserSideDishesForm(instance=side_dish)
@@ -214,12 +214,12 @@ def edit_user_side_dish(request, id):
     })
 
 
-# """ prepared delete for modal"""
+""" prepared delete for modal"""
 
-# @login_required
-# def delete_user_main_course(request, id):
-#     main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
-#     main_course.delete()
-#
-#     return HttpResponse("ok")
+@login_required
+def delete_user_side_dish(request, id):
+    side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
+    side_dish.delete()
+
+    return HttpResponse("ok")
 
