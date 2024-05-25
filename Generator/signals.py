@@ -26,7 +26,7 @@ def clone_salads(sender, instance, created, **kwargs):
             UserSalad.objects.create(
                 user=instance,
                 central_salad=central_salad,
-                name=central_salads.name,
+                name=central_salad.name,
                 description=central_salad.description
             )
 
@@ -38,8 +38,8 @@ def clone_soups(sender, instance, created, **kwargs):
             UserSoup.objects.create(
                 user=instance,
                 central_soup=central_soup,
-                name=central_soups.name,
-                description=central_soups.description
+                name=central_soup.name,
+                description=central_soup.description
             )
 
 @receiver(post_save, sender=User)

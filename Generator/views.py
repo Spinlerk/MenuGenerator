@@ -67,14 +67,6 @@ def edit_user_main_courses(request, id):
     })
 
 
-# @login_required
-# def delete_user_main_course(request, id):
-#     main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
-#     if request.method == 'POST':
-#         main_course.delete()
-#         return redirect('user_main_courses')
-#     return render(request, 'user_database_interface/confirm_delete.html', {'main_course': main_course})
-
 """ delete modal"""
 
 @login_required
@@ -103,7 +95,7 @@ def add_user_soup(request):
             return redirect('Generator:user_soups')
     else:
         form = UserSoupForm()
-    return render(request, 'user_database_interface/add_soup.html')
+    return render(request, 'user_database_interface/add_soup.html',{'form': form})
 
 
 @login_required
@@ -123,22 +115,14 @@ def edit_user_soup(request, id):
     })
 
 
+""" prepared delete for modal"""
+
+@login_required
 def delete_user_soup(request, id):
     soup = get_object_or_404(UserSoup, id=id, user=request.user)
-    if request.method == 'POST':
-        soup.delete()
-        return redirect('Generator:user_soups')
-    return render(request, 'user_database_interface/confirm_delete.html', {'soup': soup})
+    soup.delete()
 
-
-# """ prepared delete for modal"""
-
-# @login_required
-# def delete_user_main_course(request, id):
-#     main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
-#     main_course.delete()
-#
-#     return HttpResponse("ok")
+    return HttpResponse("ok")
 
 
 """ Views for user salads """
@@ -161,7 +145,7 @@ def add_user_salad(request):
             return redirect('Generator:user_salads')
     else:
         form = UserSaladForm()
-    return render(request, 'user_database_interface/add_salad.html')
+    return render(request, 'user_database_interface/add_salad.html', {'form': form})
 
 
 @login_required
@@ -217,7 +201,7 @@ def add_user_side_dish(request):
             return redirect('Generator:user_side_dishes')
     else:
         form = UserSaladForm()
-    return render(request, 'user_database_interface/add_side_dish.html')
+    return render(request, 'user_database_interface/add_side_dish.html', {'form': form})
 
 
 @login_required
