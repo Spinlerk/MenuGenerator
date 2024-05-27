@@ -11,7 +11,7 @@
         <div id="soup-{{ soup.id }}">
              <div>{{ soup.name }}</div>
 
-             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup">Delete</button>
+             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup-{{ soup.id }}">Delete</button>
 
              {% include "modals/delete_soup.html" with id=soup.id %}
              <a href="{% url 'Generator:edit_soup' id=soup.id %}" class="btn btn-primary">Edit</a>
@@ -20,5 +20,4 @@
 
     <a href="{% url 'Generator:add_soup' %}" class="btn btn-primary">Add soup</a>
     <a href="{% url 'Generator:dashboard' %}" class="btn btn-secondary">Back</a>
-
 {% endblock %}

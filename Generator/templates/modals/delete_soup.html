@@ -1,4 +1,4 @@
-<div class="modal" id="delete-soup" tabindex="-1">
+<div class="modal" id="delete-soup-{{ id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,14 +10,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary cancel-button" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary delete-soup" data-id="{{ id }}">Yes</button>
+                <button type="button" class="btn btn-primary delete-soup-{{ id }}" data-id="{{ id }}">Yes</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.querySelector(".delete-soup").addEventListener("click", (e) => {
+    document.querySelector(".delete-soup-{{ id }}").addEventListener("click", (e) => {
         const target = e.target;
         const id = target.getAttribute("data-id");
 

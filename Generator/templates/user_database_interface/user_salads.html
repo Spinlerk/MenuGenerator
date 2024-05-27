@@ -11,7 +11,7 @@
         <div id="salad-{{ salad.id }}">
             <div>{{ salad.name }}</div>
 
-            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-salad">Delete</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-salad-{{ salad.id }}">Delete</button>
 
             {% include "modals/delete_salad.html" with id=salad.id %}
             <a href="{% url 'Generator:edit_salad' id=salad.id %}" class="btn btn-primary">Edit</a>

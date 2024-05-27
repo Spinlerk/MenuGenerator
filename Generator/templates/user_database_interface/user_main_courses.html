@@ -11,7 +11,7 @@
         <div id="main-course-{{ main_course.id }}">
             <div>{{ main_course.name }}</div>
             
-            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-main-course">Delete</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-main-course-{{ main_course.id }}">Delete</button>
 
             {% include "modals/delete_main_course.html" with id=main_course.id %}
             <a href="{% url 'Generator:edit_main_course' id=main_course.id %}" class="btn btn-primary">Edit</a>
