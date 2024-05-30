@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Create Weekly Menu</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for day in form.fields.day.choices %}
+            <h2>{{ day.1 }}</h2>
+            <div id="{{ day.0 }}-menu">
+                <div class="menu-item">
+                    <label>Soup:</label>
+                    <select name="{{ day.0 }}_soup">
+                        <option value="">Select Soup</option>
+                        {% for soup in form.fields.soup.queryset %}
+                            <option value="{{ soup.id }}">{{ soup.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="remove-item">Remove</button>
+                </div>
+                <div class="menu-item">
+                    <label>Main Course:</label>
+                    <select name="{{ day.0 }}_main_course">
+                        <option value="">Select Main Course</option>
+                        {% for main_course in form.fields.main_course.queryset %}
+                            <option value="{{ main_course.id }}">{{ main_course.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label>Side Dish:</label>
+                    <select name="{{ day.0 }}_side_dish">
+                        <option value="">Select Side Dish</option>
+                        {% for side_dish in form.fields.side_dish.queryset %}
+                            <option value="{{ side_dish.id }}">{{ side_dish.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="remove-item">Remove</button>
+                </div>
+                <div class="menu-item">
+                    <label>Salad:</label>
+                    <select name="{{ day.0 }}_salad">
+                        <option value="">Select Salad</option>
+                        {% for salad in form.fields.salad.queryset %}
+                            <option value="{{ salad.id }}">{{ salad.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="remove-item">Remove</button>
+                </div>
+            </div>
+            <button type="button" class="add-item" data-day="{{ day.0 }}">Add Item</button>
+        {% endfor %}
+        <button type="submit">Generate Menu</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.add-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const day = this.getAttribute('data-day');
+                    const menuDiv = document.getElementById(`${day}-menu`);
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('menu-item');
+                    newItem.innerHTML = `
+                <label>Item Type:</label>
+                <select class="item-type">
+                    <option value="soup">Soup</option>
+                    <option value="main_course">Main Course</option>
+                    <option value="side_dish">Side Dish</option>
+                    <option value="salad">Salad</option>
+                </select>
+                <label>Item:</label>
+                <select class="item-select">
+                    <!-- Options will be dynamically populated based on item type -->
+                </select>
+                <button type="button" class="remove-item">Remove</button>
+            `;
+                    menuDiv.appendChild(newItem);
+
+                    newItem.querySelector('.remove-item').addEventListener('click', function() {
+                        newItem.remove();
+                    });
+
+                    newItem.querySelector('.item-type').addEventListener('change', function() {
+                        const itemType = this.value;
+                        const itemSelect = newItem.querySelector('.item-select');
+                        itemSelect.innerHTML = '';  // Clear previous options
+
+                        fetch(`/get_items/${itemType}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.items.forEach(item => {
+                                    const option = document.createElement('option');
+                                    option.value = item.id;
+                                    option.textContent = item.name;
+                                    itemSelect.appendChild(option);
+                                });
+                            });
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

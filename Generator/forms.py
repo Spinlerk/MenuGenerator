@@ -17,6 +17,9 @@ class UserRegistrationForm(forms.ModelForm):
 
         return cd['password2']
 
+"""Form for display courses"""
+
+
 class UserMainCourseForm(forms.ModelForm):
     class Meta:
         model = UserMainCourse
@@ -36,3 +39,19 @@ class UserSoupForm(forms.ModelForm):
     class Meta:
         model = UserSoup
         fields = ['name', 'description']
+
+"""Form for display Daily menu"""
+
+class DailyMenuForm(forms.Form):
+    DAY_CHOICES = [
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+    ]
+
+    soup = forms.ModelChoiceField(queryset=UserSoup.objects.all(), required=False)
+    main_course = forms.ModelChoiceField(queryset=UserMainCourse.objects.all(), required=False)
+    side_dish = forms.ModelChoiceField(queryset=UserSideDishes.objects.all(), required=False)
+    salad = forms.ModelChoiceField(queryset=UserSalad.objects.all(), required=False)

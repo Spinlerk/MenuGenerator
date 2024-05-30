@@ -1,7 +1,7 @@
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.urls import path, include, reverse_lazy
 from . import views
-
+from .views import create_weekly_menu, get_items
 
 app_name = 'Generator'
 
@@ -29,4 +29,6 @@ urlpatterns = [
     path("add-side-dish", views.add_user_side_dish, name='add_side_dish'),
     path('edit-side-dish/<int:id>/', views.edit_user_side_dish, name='edit_side_dish'),
     path("delete-side-dish/<int:id>", views.delete_user_side_dish, name='delete_side_dish'),
+    path('get_items/<str:item_type>/', get_items, name='get_items'),
+    path('create_weekly_menu/', create_weekly_menu, name='create_weekly_menu'),
 ]
