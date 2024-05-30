@@ -29,4 +29,5 @@ urlpatterns = [
     path("add-side-dish", views.add_user_side_dish, name='add_side_dish'),
     path('edit-side-dish/<int:id>/', views.edit_user_side_dish, name='edit_side_dish'),
     path("delete-side-dish/<int:id>", views.delete_user_side_dish, name='delete_side_dish'),
+    path("create-daily_menu/", views.create_daily_menu, name='create_daily_menu'),
 ]

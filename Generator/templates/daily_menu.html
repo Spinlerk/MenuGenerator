@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Menu</title>
+</head>
+<body>
+<h1>Daily Menu</h1>
+<h2>Soup</h2>
+{% if soup %}
+    <p>{{ soup.name }}</p>
+{% else %}
+    <p>No soup available</p>
+{% endif %}
+
+<h2>Main Courses</h2>
+{% if main_courses %}
+    <ul>
+        {% for main_course in main_courses %}
+            <li>{{ main_course.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No main courses available</p>
+{% endif %}
+
+<h2>Salad</h2>
+{% if salad %}
+    <p>{{ salad.name }}</p>
+{% else %}
+    <p>No salad available</p>
+{% endif %}
+</body>
+</html>

@@ -11,7 +11,7 @@ class CentralMainCourse(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 
 """ User tables will be cloned from Central tables when new user is created. """
@@ -24,9 +24,10 @@ class UserMainCourse(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    last_used = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 
 class CentralSoup(models.Model):
@@ -35,8 +36,9 @@ class CentralSoup(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 
 class UserSoup(models.Model):
@@ -46,9 +48,10 @@ class UserSoup(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    last_used = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 
 class CentralSalad(models.Model):
@@ -57,8 +60,9 @@ class CentralSalad(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 
 class UserSalad(models.Model):
@@ -68,9 +72,10 @@ class UserSalad(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    last_used = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 
 class CentralSideDishes(models.Model):
@@ -80,7 +85,7 @@ class CentralSideDishes(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 
 class UserSideDishes(models.Model):
@@ -91,7 +96,8 @@ class UserSideDishes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description}"
 
 

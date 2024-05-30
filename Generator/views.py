@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -222,4 +223,44 @@ def delete_user_side_dish(request, id):
     side_dish.delete()
 
     return HttpResponse("ok")
+
+
+@login_required
+def create_daily_menu(request):
+    today = timezone.now().date()
+
+    """Filtering meals by last used"""
+    soup = UserSoup.objects.filter(last_used__isnull=True).first()
+    if not soup:
+        soup = UserSoup.objects.order_by('last_used').first()
+
+    main_courses = list(UserMainCourse.objects.filter(last_used__isnull=True)[:2])
+    if len(main_courses) < 2:
+        additional_courses = list(UserMainCourse.objects.order_by('last_used')[:2 - len(main_courses)])
+        main_courses.extend(additional_courses)
+
+    salad = UserSalad.objects.filter(last_used__isnull=True).first()
+    if not salad:
+        salad = UserSalad.objects.order_by('last_used').first()
+
+    # Aktualizace posledního použití (last_used) u vybraných jídel
+    if soup:
+        soup.last_used = today
+        soup.save()
+
+    if salad:
+        salad.last_used = today
+        salad.save()
+
+    for main_course in main_courses:
+        main_course.last_used = today
+        main_course.save()
+
+    context = {
+        'soup': soup,
+        'main_courses': main_courses,
+        'salad': salad,
+    }
+
+    return render(request, 'daily_menu.html', context)
 
