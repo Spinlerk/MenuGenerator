@@ -1,35 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Daily Menu</title>
+    <style>
+        .main-course-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .main-course-container p {
+            margin: 0;
+            margin-right: 10px;
+        }
+        .side-dish-input {
+            width: 200px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <script type="text/javascript">
+        $(function() {
+            var sideDishes = [
+                {% for side_dish in side_dishes %}
+                    "{{ side_dish.name }}"{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+
+            $(".side-dish-input").autocomplete({
+                source: sideDishes
+            });
+        });
+    </script>
 </head>
 <body>
 <h1>Daily Menu</h1>
 <h2>Soup</h2>
-{% if soup %}
-    <p>{{ soup.name }}</p>
-{% else %}
-    <p>No soup available</p>
-{% endif %}
+<p>{{ soup.name }}</p>
 
 <h2>Main Courses</h2>
-{% if main_courses %}
-    <ul>
-        {% for main_course in main_courses %}
-            <li>{{ main_course.name }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No main courses available</p>
-{% endif %}
+{% for main_course in main_courses %}
+    <div class="main-course-container">
+        <p>{{ main_course.name }}</p>
+        <input type="text" class="side-dish-input" placeholder="Enter side dish">
+    </div>
+{% endfor %}
 
 <h2>Salad</h2>
-{% if salad %}
-    <p>{{ salad.name }}</p>
-{% else %}
-    <p>No salad available</p>
-{% endif %}
+<p>{{ salad.name }}</p>
 </body>
 </html>
-
+</body>
+</html>
+    

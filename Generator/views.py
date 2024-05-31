@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import UserMainCourse, UserSoup, UserSalad, UserSideDishes
-from .forms import UserRegistrationForm, UserMainCourseForm, UserSoupForm, UserSaladForm, UserSideDishesForm
-
+from .forms import UserRegistrationForm, UserMainCourseForm, UserSoupForm, UserSaladForm, UserSideDishesForm, \
+    SideDishForm
 
 """Views for user main courses"""
 
@@ -229,7 +229,7 @@ def delete_user_side_dish(request, id):
 def create_daily_menu(request):
     today = timezone.now().date()
 
-    """Filtering meals by last used"""
+    # Získání nejdéle nepoužitých jídel
     soup = UserSoup.objects.filter(last_used__isnull=True).first()
     if not soup:
         soup = UserSoup.objects.order_by('last_used').first()
@@ -256,10 +256,13 @@ def create_daily_menu(request):
         main_course.last_used = today
         main_course.save()
 
+    side_dishes = UserSideDishes.objects.all()
+
     context = {
         'soup': soup,
         'main_courses': main_courses,
         'salad': salad,
+        'side_dishes': side_dishes,
     }
 
     return render(request, 'daily_menu.html', context)

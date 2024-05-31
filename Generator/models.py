@@ -100,4 +100,10 @@ class UserSideDishes(models.Model):
     def __str__(self):
         return f"{self.name} - {self.description}"
 
-
+class DailyMenu(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    day = models.DateField()
+    soup = models.ForeignKey(UserSoup, on_delete=models.SET_NULL, blank=True, null=True)
+    main_course = models.ManyToManyField(UserMainCourse)
+    side_dishes = models.ManyToManyField(UserSideDishes, blank=True)
+    salad = models.ForeignKey(UserSalad, on_delete=models.SET_NULL, blank=True, null=True)

@@ -28,11 +28,21 @@ class UserSaladForm(forms.ModelForm):
         fields = ['name', 'description']
 
 class UserSideDishesForm(forms.ModelForm):
-    class Meta:
-        model = UserSideDishes
-        fields = ['name', 'description']
+        class Meta:
+            model = UserSideDishes
+            fields = ['name', 'description']
 
 class UserSoupForm(forms.ModelForm):
     class Meta:
         model = UserSoup
         fields = ['name', 'description']
+
+class SideDishForm(forms.ModelForm):
+    side_dish = forms.CharField(
+        label="Side Dish",
+        widget=forms.TextInput(attrs={'class': 'form-control', list: 'side_dishes-list'})
+    )
+
+    class Meta:
+        model = UserSideDishes
+        fields = ['side_dish']
