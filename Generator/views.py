@@ -227,9 +227,56 @@ def delete_user_side_dish(request, id):
 
 @login_required
 def create_daily_menu(request):
-    today = timezone.now().date()
+    if request.method == 'POST':
+        # Zpracování odeslaného formuláře
+        today = timezone.now()
+        soup_name = request.POST.get('soup')
+        main_course_1_name = request.POST.get('main_course_1')
+        main_course_2_name = request.POST.get('main_course_2')
+        side_dish_1_name = request.POST.get('side_dish_1')
+        side_dish_2_name = request.POST.get('side_dish_2')
+        salad_name = request.POST.get('salad')
 
-    # Získání nejdéle nepoužitých jídel
+        # Aktualizace nebo vytvoření polévky
+        if soup_name:
+            soup, created = UserSoup.objects.get_or_create(name=soup_name)
+            soup.last_used = today
+            soup.save()
+        else:
+            soup = None
+
+        # Aktualizace nebo vytvoření hlavních chodů a příloh
+        main_courses = []
+        if main_course_1_name:
+            main_course_1, created = UserMainCourse.objects.get_or_create(name=main_course_1_name)
+            main_course_1.last_used = today
+            main_course_1.save()
+            main_courses.append(main_course_1)
+
+        if main_course_2_name:
+            main_course_2, created = UserMainCourse.objects.get_or_create(name=main_course_2_name)
+            main_course_2.last_used = today
+            main_course_2.save()
+            main_courses.append(main_course_2)
+
+        # Aktualizace nebo vytvoření salátu
+        if salad_name:
+            salad, created = UserSalad.objects.get_or_create(name=salad_name)
+            salad.last_used = today
+            salad.save()
+        else:
+            salad = None
+
+        context = {
+            'soup': soup,
+            'main_courses': main_courses,
+            'salad': salad,
+            'side_dishes': [side_dish_1_name, side_dish_2_name]
+        }
+
+        return render(request, 'daily_menu.html', context)
+
+    # Výchozí zobrazení - vygenerování nejdéle nepoužitých jídel
     soup = UserSoup.objects.filter(last_used__isnull=True).first()
     if not soup:
         soup = UserSoup.objects.order_by('last_used').first()
@@ -243,19 +290,6 @@ def create_daily_menu(request):
     if not salad:
         salad = UserSalad.objects.order_by('last_used').first()
 
-    # Aktualizace posledního použití (last_used) u vybraných jídel
-    if soup:
-        soup.last_used = today
-        soup.save()
-
-    if salad:
-        salad.last_used = today
-        salad.save()
-
-    for main_course in main_courses:
-        main_course.last_used = today
-        main_course.save()
-
     side_dishes = UserSideDishes.objects.all()
 
     context = {
@@ -263,6 +297,9 @@ def create_daily_menu(request):
         'main_courses': main_courses,
         'salad': salad,
         'side_dishes': side_dishes,
+        'soups': UserSoup.objects.all(),
+        'main_courses_list': UserMainCourse.objects.all(),
+        'salads': UserSalad.objects.all()
     }
 
     return render(request, 'daily_menu.html', context)

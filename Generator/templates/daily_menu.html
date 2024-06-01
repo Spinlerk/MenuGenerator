@@ -3,30 +3,45 @@
 <head>
     <title>Daily Menu</title>
     <style>
-        .main-course-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .main-course-container p {
-            margin: 0;
-            margin-right: 10px;
-        }
-        .side-dish-input {
-            width: 200px;
+        .input-field {
+            width: 200px; /* Nastavte požadovanou šířku */
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-    <script type="text/javascript">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
         $(function() {
+            var soups = [
+                {% for soup in soups %}
+                    "{{ soup.name }}"{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+            var mainCourses = [
+                {% for main_course in main_courses_list %}
+                    "{{ main_course.name }}"{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+            var salads = [
+                {% for salad in salads %}
+                    "{{ salad.name }}"{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
             var sideDishes = [
                 {% for side_dish in side_dishes %}
                     "{{ side_dish.name }}"{% if not forloop.last %},{% endif %}
                 {% endfor %}
             ];
 
+            $(".soup-input").autocomplete({
+                source: soups
+            });
+            $(".main-course-input").autocomplete({
+                source: mainCourses
+            });
+            $(".salad-input").autocomplete({
+                source: salads
+            });
             $(".side-dish-input").autocomplete({
                 source: sideDishes
             });
@@ -35,21 +50,28 @@
 </head>
 <body>
 <h1>Daily Menu</h1>
-<h2>Soup</h2>
-<p>{{ soup.name }}</p>
 
-<h2>Main Courses</h2>
-{% for main_course in main_courses %}
-    <div class="main-course-container">
-        <p>{{ main_course.name }}</p>
-        <input type="text" class="side-dish-input" placeholder="Enter side dish">
-    </div>
-{% endfor %}
+<form method="post">
+    {% csrf_token %}
 
-<h2>Salad</h2>
-<p>{{ salad.name }}</p>
-</body>
-</html>
+    <h2>Soup</h2>
+    <input type="text" name="soup" class="input-field soup-input" value="{% if soup %}{{ soup.name }}{% endif %}" placeholder="Add a soup">
+
+    <h2>Main Courses</h2>
+    <ul>
+        {% for main_course in main_courses %}
+            <li>
+                <input type="text" name="main_course_{{ forloop.counter }}" class="input-field main-course-input" value="{{ main_course.name }}" placeholder="Add a main course">
+                <input type="text" name="side_dish_{{ forloop.counter }}" class="input-field side-dish-input" placeholder="Add a side dish">
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Salad</h2>
+    <input type="text" name="salad" class="input-field salad-input" value="{% if salad %}{{ salad.name }}{% endif %}" placeholder="Add a salad">
+
+    <button type="submit">Save Menu</button>
+</form>
 </body>
 </html>
     
