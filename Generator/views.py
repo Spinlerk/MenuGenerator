@@ -224,7 +224,6 @@ def delete_user_side_dish(request, id):
 
     return HttpResponse("ok")
 
-
 @login_required
 def create_daily_menu(request):
     if request.method == 'POST':
@@ -274,7 +273,7 @@ def create_daily_menu(request):
             'side_dishes': [side_dish_1_name, side_dish_2_name]
         }
 
-        return render(request, 'daily_menu.html', context)
+        return render(request, 'daily_menu_complete.html', context)
 
     # Výchozí zobrazení - vygenerování nejdéle nepoužitých jídel
     soup = UserSoup.objects.filter(last_used__isnull=True).first()

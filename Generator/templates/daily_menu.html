@@ -6,6 +6,13 @@
         .input-field {
             width: 200px; /* Nastavte požadovanou šířku */
         }
+        .main-course-container {
+            display: flex;
+            align-items: center;
+        }
+        .main-course-container input {
+            margin-right: 10px;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -60,7 +67,7 @@
     <h2>Main Courses</h2>
     <ul>
         {% for main_course in main_courses %}
-            <li>
+            <li class="main-course-container">
                 <input type="text" name="main_course_{{ forloop.counter }}" class="input-field main-course-input" value="{{ main_course.name }}" placeholder="Add a main course">
                 <input type="text" name="side_dish_{{ forloop.counter }}" class="input-field side-dish-input" placeholder="Add a side dish">
             </li>

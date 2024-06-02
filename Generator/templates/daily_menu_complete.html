@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Menu Complete</title>
+</head>
+<body>
+<h1>Daily Menu</h1>
+
+<div>
+    <h3>Soup</h3>
+    <p>{{ soup.name }}</p>
+</div>
+<div>
+    <h3>Main Courses</h3>
+    <ul>
+        {% for main_course in main_courses %}
+            <li>{{ main_course.name }}{% if side_dishes|length > forloop.counter0 %}, {{ side_dishes.0 }}{% endif %}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    <h3>Salad</h3>
+    <p>{{ salad.name }}</p>
+</div>
+</body>
+</html>
