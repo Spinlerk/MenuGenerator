@@ -3,14 +3,13 @@
 {% block title %} Main courses {% endblock %}
 
 {% block content %}
-
-    <h1>Your Main Course</h1>
- 
+    {% url 'Generator:add_main_course' as add_main_course_url %}
+    {% include "partials/section_header.html" with title="Your Main Course" create_text="Add main course" url_link=add_main_course_url %}
 
     {% for main_course in main_courses %}
         <div id="main-course-{{ main_course.id }}">
             <div>{{ main_course.name }}</div>
-            
+
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-main-course-{{ main_course.id }}">Delete</button>
 
             {% include "modals/delete_main_course.html" with id=main_course.id %}
@@ -18,6 +17,23 @@
         </div>
     {% endfor %}
 
-    <a href="{% url 'Generator:add_main_course' %}" class="btn btn-primary">Add main course</a>
-    <a href="{% url 'Generator:dashboard' %}" class="btn btn-secondary">Back</a>
+    {#   <div class="d-flex gap-2" style="flex-wrap: wrap;">#}
+    {#     {% for main_course in main_courses %}#}
+    {#        <div class="card" style="width: 18rem;" id="main-course-{{ main_course.id }}">#}
+    {#          <div class="card-body" style="display: flex; flex-direction: column;">#}
+    {#            <h5 class="card-title" style="flex: 1;">{{ main_course.name }}</h5>#}
+    {##}
+    {#            <div class="gap-2 d-flex">#}
+    {#                <button class="btn btn-danger w-50" data-bs-toggle="modal"#}
+    {#                data-bs-target="#delete-main-course-{{ main_course.id }}">Delete#}
+    {#                </button>#}
+    {##}
+    {#                <a href="{% url 'Generator:edit_main_course' id=main_course.id %}" class="w-50 btn btn-primary">Edit</a>#}
+    {#            </div>#}
+    {##}
+    {#            {% include "modals/delete_main_course.html" with id=main_course.id %}#}
+    {#          </div>#}
+    {#        </div>#}
+    {#    {% endfor %}#}
+    </div>
 {% endblock %}

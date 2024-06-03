@@ -1,10 +1,10 @@
+from django.forms import model_to_dict
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import UserMainCourse, UserSoup, UserSalad, UserSideDishes
-from .forms import UserRegistrationForm, UserMainCourseForm, UserSoupForm, UserSaladForm, UserSideDishesForm, \
-    SideDishForm
+from .forms import UserRegistrationForm, UserMainCourseForm, UserSoupForm, UserSaladForm, UserSideDishesForm
 
 """Views for user main courses"""
 
@@ -266,11 +266,29 @@ def create_daily_menu(request):
         else:
             salad = None
 
+        # print(side_dish_1_name)
+        # print(side_dish_2_name)
+        #
+        # print([model_to_dict(main_course) for main_course in main_courses])
+        # print(main_courses.values())
+
+        main_courses_with_dishes = []
+        side_dishes = [side_dish_1_name, side_dish_2_name]
+
+        for index, main_course in enumerate(main_courses):
+            text = main_course.name
+
+            if index < len(side_dishes):
+                text = f"{text}, {side_dishes[index]}"
+
+            main_courses_with_dishes.append(text)
+
         context = {
             'soup': soup,
-            'main_courses': main_courses,
+            # 'main_courses': main_courses,
+            'main_courses_with_dishes': main_courses_with_dishes,
             'salad': salad,
-            'side_dishes': [side_dish_1_name, side_dish_2_name]
+            # 'side_dishes': [side_dish_1_name, side_dish_2_name]
         }
 
         return render(request, 'daily_menu_complete.html', context)
@@ -302,4 +320,3 @@ def create_daily_menu(request):
     }
 
     return render(request, 'daily_menu.html', context)
-

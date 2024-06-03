@@ -3,21 +3,17 @@
 {% block title %} Soups {% endblock %}
 
 {% block content %}
+    {% url 'Generator:add_soup' as add_soup_url %}
+    {% include "partials/section_header.html" with title="Your Soups" create_text="Add soup" url_link=add_soup_url %}
 
-    <h1>Your Soups</h1>
-
-    
     {% for soup in soups %}
         <div id="soup-{{ soup.id }}">
-             <div>{{ soup.name }}</div>
+            <div>{{ soup.name }}</div>
 
-             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup-{{ soup.id }}">Delete</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup-{{ soup.id }}">Delete</button>
 
-             {% include "modals/delete_soup.html" with id=soup.id %}
-             <a href="{% url 'Generator:edit_soup' id=soup.id %}" class="btn btn-primary">Edit</a>
+            {% include "modals/delete_soup.html" with id=soup.id %}
+            <a href="{% url 'Generator:edit_soup' id=soup.id %}" class="btn btn-primary">Edit</a>
         </div>
     {% endfor %}
-
-    <a href="{% url 'Generator:add_soup' %}" class="btn btn-primary">Add soup</a>
-    <a href="{% url 'Generator:dashboard' %}" class="btn btn-secondary">Back</a>
 {% endblock %}

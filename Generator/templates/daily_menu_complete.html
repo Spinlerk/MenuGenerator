@@ -13,8 +13,8 @@
 <div>
     <h3>Main Courses</h3>
     <ul>
-        {% for main_course in main_courses %}
-            <li>{{ main_course.name }}{% if side_dishes|length > forloop.counter0 %}, {{ side_dishes.0 }}{% endif %}</li>
+        {% for main_courses_with_dish in main_courses_with_dishes %}
+            <li>{{ main_courses_with_dish }}</li>
         {% endfor %}
     </ul>
 </div>

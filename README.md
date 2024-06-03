@@ -1,2 +1,2 @@
-# MenuGenerator
+# MenuCreator
 Web aplication for restaurants
