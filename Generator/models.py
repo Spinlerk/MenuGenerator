@@ -10,6 +10,12 @@ class CentralMainCourse(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+
     def __str__(self):
         return f"{self.name} - {self.description}"
 
@@ -26,6 +32,12 @@ class UserMainCourse(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     last_used = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+
     def __str__(self):
         return f"{self.name} - {self.description}"
 
@@ -36,6 +48,11 @@ class CentralSoup(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
@@ -50,6 +67,12 @@ class UserSoup(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     last_used = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+
     def __str__(self):
         return f"{self.name} - {self.description}"
 
@@ -60,6 +83,11 @@ class CentralSalad(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
@@ -74,6 +102,12 @@ class UserSalad(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     last_used = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+
     def __str__(self):
         return f"{self.name} - {self.description}"
 
@@ -83,6 +117,12 @@ class CentralSideDishes(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
@@ -96,6 +136,11 @@ class UserSideDishes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"

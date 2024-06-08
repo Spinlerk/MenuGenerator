@@ -7,13 +7,13 @@
     {% include "partials/section_header.html" with title="Your Soups" create_text="Add soup" url_link=add_soup_url %}
 
     {% for soup in soups %}
-        <div id="soup-{{ soup.id }}">
+        <div id="soup-{{ soup.id }}" class="item">
             <div>{{ soup.name }}</div>
-
+            <div class="item-actions">
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup-{{ soup.id }}">Delete</button>
-
             {% include "modals/delete_soup.html" with id=soup.id %}
             <a href="{% url 'Generator:edit_soup' id=soup.id %}" class="btn btn-primary">Edit</a>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

@@ -1,11 +1,12 @@
 .item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.actions {
+.item-actions {
+    margin-left: auto;
     display: flex;
     gap: 10px;
 }
+
