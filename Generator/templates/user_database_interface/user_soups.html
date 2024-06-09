@@ -1,8 +1,16 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %} Soups {% endblock %}
 
 {% block content %}
+    <style>
+        body {
+            background-image: url("{% static 'images/soup_bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
     {% url 'Generator:add_soup' as add_soup_url %}
     {% include "partials/section_header.html" with title="Your Soups" create_text="Add soup" url_link=add_soup_url %}
 
@@ -16,4 +24,6 @@
             </div>
         </div>
     {% endfor %}
+
+    <a href="{% url 'Generator:add_soup' %}" class="btn btn-primary">Add Soup</a>
 {% endblock %}

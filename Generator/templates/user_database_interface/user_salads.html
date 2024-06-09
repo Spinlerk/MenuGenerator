@@ -1,23 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %} Salads {% endblock %}
 
 {% block content %}
+    <style>
+        body {
+            background-image: url("{% static 'images/salad_bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+
     {% url 'Generator:add_salad' as add_salad_url %}
-   
     {% include "partials/section_header.html" with title="Your Salads" create_text="Add Salads" url_link=add_salad_url %}
 
     {% for salad in salads %}
         <div id="salad-{{ salad.id }}" class="item">
             <div>{{ salad.name }}</div>
             <div class="item-actions">
-            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-salad-{{ salad.id }}">Delete</button>
-            {% include "modals/delete_salad.html" with id=salad.id %}
-            <a href="{% url 'Generator:edit_salad' id=salad.id %}" class="btn btn-primary">Edit</a>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-salad-{{ salad.id }}">Delete</button>
+                {% include "modals/delete_salad.html" with id=salad.id %}
+                <a href="{% url 'Generator:edit_salad' id=salad.id %}" class="btn btn-primary">Edit</a>
             </div>
         </div>
     {% endfor %}
 
-    
-    
+    <a href="{% url 'Generator:add_salad' %}" class="btn btn-primary">Add Salad</a>
 {% endblock %}

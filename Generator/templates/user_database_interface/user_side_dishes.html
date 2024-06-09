@@ -1,8 +1,16 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %} Side dishes {% endblock %}
 
 {% block content %}
+    <style>
+        body {
+            background-image: url("{% static 'images/Side_dish_bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
     {% url 'Generator:add_side_dish' as add_side_dish_url %}
     {% include "partials/section_header.html" with title="Your Main Coures" create_text="Add Side dishes" url_link=add_side_dish_url %}
     

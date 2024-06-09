@@ -1,8 +1,16 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %} Main courses {% endblock %}
 
 {% block content %}
+    <style>
+        body {
+            background-image: url("{% static 'images/main_dish_bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
     {% url 'Generator:add_main_course' as add_main_course_url %}
     {% include "partials/section_header.html" with title="Your Main Course" create_text="Add main course" url_link=add_main_course_url %}
 
@@ -17,4 +25,5 @@
         </div>
     {% endfor %}
 
+    <a href="{% url 'Generator:add_main_course' %}" class="btn btn-primary">Add Main Course</a>
 {% endblock %}

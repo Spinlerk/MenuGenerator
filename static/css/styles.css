@@ -10,3 +10,28 @@
     gap: 10px;
 }
 
+.card {
+    width: 18rem;
+    margin-bottom: 20px; /* Odsazení mezi kartami */
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #A0522D
+}
+
+.btn-primary {
+    background-color: #DAA520;
+    border-color: #DAA520;
+}
+
+h1 {
+        margin-bottom: 20px;
+    }
