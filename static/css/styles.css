@@ -32,6 +32,6 @@
     border-color: #DAA520;
 }
 
-h1 {
-        margin-bottom: 20px;
-    }
+h1,h2 {
+        margin-bottom: 80px;
+}

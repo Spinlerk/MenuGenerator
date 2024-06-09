@@ -13,7 +13,7 @@
     </style>
     <div class="d-flex justify-content-between">
         <h1>Welcome {{ user.username }}, in Menu Creator! </h1>
-    
+
         <form action="{% url 'Generator:logout' %}" method="post">
             {% csrf_token %}
             <button class="btn btn-primary">Log out</button>
@@ -25,7 +25,7 @@
         <div class="card" style="width: 18rem;">
             <img src="{% static 'images/main_courses.jpg' %}" class="card-img-top" alt="Main Courses">
             <div class="card-body">
-                
+
                 <a href="{% url 'Generator:main_courses' %}" class="btn btn-primary">Main Courses</a>
             </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="card" style="width: 18rem;">
             <img src="{% static 'images/soups.jpg' %}" class="card-img-top" alt="Soups" style="object-fit: cover; object-position: center bottom; width: 100%;">
             <div class="card-body">
-                
+
                 <a href="{% url 'Generator:soups' %}" class="btn btn-primary">Soups</a>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="card" style="width: 18rem;">
             <img src="{% static 'images/salads.jpg' %}" class="card-img-top" alt="Salads">
             <div class="card-body">
-               
+
                 <a href="{% url 'Generator:salads' %}" class="btn btn-primary">Salads</a>
             </div>
         </div>
@@ -52,17 +52,15 @@
         <div class="card" style="width: 18rem;">
             <img src="{% static 'images/side_dishes.jpg' %}" class="card-img-top" alt="Side Dishes">
             <div class="card-body">
-                
+
                 <a href="{% url 'Generator:side_dishes' %}" class="btn btn-primary">Side Dishes</a>
             </div>
         </div>
         <h2>Generate your menu!</h2>
 
-        <!-- Daily menu card -->
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem; margin-top: 20px;">
             <img src="{% static 'images/daily_menu.jpg' %}" class="card-img-top" alt="Generate Daily Menu" style="object-fit:contain; width: 100%; height: 120px">
             <div class="card-body">
-                
                 <a href="{% url 'Generator:create_daily_menu' %}" class="btn btn-success">Generate menu for the day</a>
             </div>
         </div>
