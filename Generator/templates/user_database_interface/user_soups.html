@@ -4,13 +4,21 @@
 
 {% block content %}
     <style>
-        body {
+        body::after {
+            content: "";
             background-image: url("{% static 'images/soup_bckgr.jpg' %}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            z-index: -1;
         }
     </style>
+
     {% url 'Generator:add_soup' as add_soup_url %}
     {% include "partials/section_header.html" with title="Your Soups" create_text="Add soup" url_link=add_soup_url %}
 

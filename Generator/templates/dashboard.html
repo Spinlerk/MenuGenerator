@@ -4,71 +4,71 @@
 
 {% block content %}
     <style>
-        body {
+        body::after {
+            content: "";
             background-image: url("{% static 'images/restaurant-bckgr.jpg' %}");
-            background-size: cover;
+            background-size: auto;
             background-position: center;
             background-repeat: no-repeat;
+            opacity: 0.65;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            z-index: -1;
         }
     </style>
     <div class="d-flex justify-content-between">
-        <h1>Welcome {{ user.username }}, in Menu Creator! </h1>
-
+        <h1>Welcome {{ user.username }}, in Menu Creator!</h1>
         <form action="{% url 'Generator:logout' %}" method="post">
             {% csrf_token %}
             <button class="btn btn-primary">Log out</button>
-            <a href="{% url 'Generator:password_change' %}">Change password</a>
+            <a href="{% url 'Generator:password_change' %}" class="change-password-link">Change password</a>
         </form>
     </div>
-    <div class="d-flex gap-2" style="flex-wrap: wrap;">
+    <hr class="hr">
+    <h2 class="mt-4 text-center">Manage your database</h2>
+    <div class="d-flex justify-content-center flex-wrap gap-3">
         <!-- main course card-->
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <img src="{% static 'images/main_courses.jpg' %}" class="card-img-top" alt="Main Courses">
             <div class="card-body">
-
                 <a href="{% url 'Generator:main_courses' %}" class="btn btn-primary">Main Courses</a>
             </div>
         </div>
 
         <!-- Soups card -->
-        <div class="card" style="width: 18rem;">
-            <img src="{% static 'images/soups.jpg' %}" class="card-img-top" alt="Soups" style="object-fit: cover; object-position: center bottom; width: 100%;">
+        <div class="card">
+            <img src="{% static 'images/soups.jpg' %}" class="card-img-top" alt="Soups">
             <div class="card-body">
-
                 <a href="{% url 'Generator:soups' %}" class="btn btn-primary">Soups</a>
             </div>
         </div>
 
         <!-- salad card-->
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <img src="{% static 'images/salads.jpg' %}" class="card-img-top" alt="Salads">
             <div class="card-body">
-
                 <a href="{% url 'Generator:salads' %}" class="btn btn-primary">Salads</a>
             </div>
         </div>
 
         <!-- Side dish card-->
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <img src="{% static 'images/side_dishes.jpg' %}" class="card-img-top" alt="Side Dishes">
             <div class="card-body">
-
                 <a href="{% url 'Generator:side_dishes' %}" class="btn btn-primary">Side Dishes</a>
             </div>
         </div>
-        <h2>Generate your menu!</h2>
-
-        <div class="card" style="width: 18rem; margin-top: 20px;">
-            <img src="{% static 'images/daily_menu.jpg' %}" class="card-img-top" alt="Generate Daily Menu" style="object-fit:contain; width: 100%; height: 120px">
+    </div>
+    <hr class="hr">
+    <h2 class="mt-4 text-center">Generate your menu!</h2>
+    <div class="d-flex justify-content-center">
+        <div class="card">
+            <img src="{% static 'images/daily_menu.jpg' %}" class="card-img-daily_menu" alt="Generate Daily Menu">
             <div class="card-body">
                 <a href="{% url 'Generator:create_daily_menu' %}" class="btn btn-success">Generate menu for the day</a>
             </div>
         </div>
     </div>
-    <style>
-        .card-img-top {
-            height: 250px;
-            object-fit: cover;
-        }
-    </style>
 {% endblock %}

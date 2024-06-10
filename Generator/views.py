@@ -1,12 +1,14 @@
 from django.forms import model_to_dict
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import UserMainCourse, UserSoup, UserSalad, UserSideDishes
 from .forms import UserRegistrationForm, UserMainCourseForm, UserSoupForm, UserSaladForm, UserSideDishesForm
+from django.contrib.auth.views import LoginView
 
-"""Views for user main courses"""
+
 
 @login_required
 def index(request):
@@ -34,6 +36,16 @@ def register(request):
 @login_required
 def user_main_courses(request):
     main_courses = UserMainCourse.objects.filter(user=request.user)
+
+    paginator = Paginator(main_courses, 10)
+    page_number = request.GET.get('page', 1)
+    try:
+        main_courses = paginator.page(page_number)
+    except PageNotAnInteger:
+        main_courses = paginator.page(1)
+    except EmptyPage:
+        main_courses = paginator.page(paginator.num_pages)
+
     return render(request, 'user_database_interface/user_main_courses.html', {'main_courses': main_courses})
 
 
@@ -63,12 +75,12 @@ def edit_user_main_courses(request, id):
     else:
         form = UserMainCourseForm(instance=main_course)
     return render(request, 'user_database_interface/edit_main_course.html', {
-                    'form': form,
-                    'main_course': main_course
+        'form': form,
+        'main_course': main_course
     })
 
 
-""" delete modal"""
+""" modal delete"""
 
 @login_required
 def delete_user_main_course(request, id):
@@ -116,7 +128,7 @@ def edit_user_soup(request, id):
     })
 
 
-""" prepared delete for modal"""
+""" modal delete"""
 
 @login_required
 def delete_user_soup(request, id):
@@ -166,7 +178,7 @@ def edit_user_salad(request, id):
     })
 
 
-""" prepared delete for modal"""
+""" modal delete"""
 
 @login_required
 def delete_user_salad(request, id):
@@ -215,7 +227,7 @@ def edit_user_side_dish(request, id):
     })
 
 
-""" prepared delete for modal"""
+""" modal delete"""
 
 @login_required
 def delete_user_side_dish(request, id):
@@ -320,3 +332,9 @@ def create_daily_menu(request):
     }
 
     return render(request, 'daily_menu.html', context)
+
+class CustomLoginView(LoginView):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('Generator:dashboard')
+        return super().dispatch(request, *args, **kwargs)

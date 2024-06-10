@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Registration {% endblock %}
 
 {% block content %}
-    <h1> Welcome in Menu generator, {{new_user.first_name}} !  </h1>
+    <style>
+        body {
+            background-image: url("{% static 'images/register_done-bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+    <h1> Welcome in Menu Creator, {{new_user.first_name}} !  </h1>
 
     <p>your account has been successfully created </p>
 

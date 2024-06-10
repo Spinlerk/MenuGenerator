@@ -1,11 +1,36 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
-    <h1>Edit Side dish</h1>
-    <form method="post" action="{% url 'Generator:edit_side_dish' id=side_dish.id %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary">Save</button>
-        <a href="{% url 'Generator:side_dishes' %}" class="btn btn-secondary">Back</a>
-    </form>
+
+    <style>
+        body::after {
+            content: "";
+            background-image: url("{% static 'images/edit_bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            z-index: -1;
+        }
+    </style>
+    <div class="centered-content">
+        <h1>Edit Side dish</h1>
+
+        <form method="post" action="{% url 'Generator:edit_side_dish'  id=side_dish.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="button-container">
+                <button class="btn btn-primary">Save</button>
+                <a href="{% url 'Generator:side_dishes' %}" class="btn btn-secondary">Back</a>
+            </div>
+        </form>
+    </div>
 {% endblock %}
+
+
+
+

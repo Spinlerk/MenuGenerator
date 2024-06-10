@@ -10,6 +10,7 @@ PasswordResetView.success_url = reverse_lazy("Generator:password_change_done")
 PasswordResetConfirmView.success_url = reverse_lazy("Generator:password_reset_complete")
 
 urlpatterns = [
+    path('login/', views.CustomLoginView.as_view(), name='login'),
     path("", include('django.contrib.auth.urls')),
     path("", views.index, name='dashboard'),
     path("register", views.register, name='register'),

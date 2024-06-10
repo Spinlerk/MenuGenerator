@@ -1,3 +1,79 @@
+/*css variables*/
+
+
+
+:root {
+    --gold-color: #DAA520;
+    --white: #ebf8ff;
+    --brown: #3D261C;
+}
+
+body {
+    color: var(--brown);
+    font-family:"Century Gothic", sans-serif;
+    font-weight: bold;
+}
+
+.card {
+width: 18rem;
+margin-bottom: 20px; /* Odsazení mezi kartami */
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-img-daily_menu {
+    object-fit:contain;
+    width: 100%;
+    height: 120px
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--brown); /* Barva pozadí karty */
+}
+
+.btn-primary {
+    background-color: var(--gold-color);
+    border-color: var(--gold-color);
+}
+
+h1 {
+    font-family:'Dancing Script', sans-serif;
+    font-size: 60px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+h2 {
+    font-family: 'Dancing Script', sans-serif;
+    font-size: 45px;
+    margin-bottom: 40px;
+    margin-top: 50px;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background-color: #ccc;
+    margin-top: 10px;
+}
+
+hr-meals {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin-top: 1px;
+
+}
+
+.change-password-link {
+    color: red;
+}
+
 .item {
     display: flex;
     align-items: center;
@@ -10,28 +86,37 @@
     gap: 10px;
 }
 
-.card {
-    width: 18rem;
-    margin-bottom: 20px; /* Odsazení mezi kartami */
-}
-
-.card-img-top {
-    height: 250px;
-    object-fit: cover;
-}
-
-.card-body {
+.d-flex {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #A0522D
 }
 
-.btn-primary {
-    background-color: #DAA520;
-    border-color: #DAA520;
+.justify-content-between {
+    justify-content: space-between;
 }
 
-h1,h2 {
-        margin-bottom: 80px;
+.justify-content-center {
+    justify-content: center;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.gap-3 {
+    gap: 1rem;
+}
+
+.centered-content {
+    margin: 10px auto; /* Horizontální centrování */
+    text-align:center; /* Centrovat text */
+}
+
+.button-container {
+    margin-top: 20px; /* Volitelné nastavení vzdálenosti mezi tlačítky a formulářem */
+    margin-left: 90px;
+}
+
+.arrow-back {
+    color: var(--gold-color);
+    font-size: 30px
 }
