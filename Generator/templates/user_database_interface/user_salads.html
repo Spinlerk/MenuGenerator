@@ -19,7 +19,7 @@
         }
     </style>
     {% url 'Generator:add_salad' as add_salad_url %}
-    {% include "partials/section_header.html" with title="Your Salads" create_text="Add Salads" url_link=add_salad_url %}
+    {% include "partials/section_header.html" with title="Your Salads" create_text="Add Salad" url_link=add_salad_url %}
 
     {% for salad in salads %}
         <div id="salad-{{ salad.id }}" class="item">

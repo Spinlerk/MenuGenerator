@@ -19,7 +19,7 @@
         }
     </style>
     {% url 'Generator:add_side_dish' as add_side_dish_url %}
-    {% include "partials/section_header.html" with title="Your Side dishes" create_text="Add Side dishes" url_link=add_side_dish_url %}
+    {% include "partials/section_header.html" with title="Your Side dish" create_text="Add Side dish" url_link=add_side_dish_url %}
     
     {% for side_dish in side_dishes %}
         <div id="side-dish-{{ side_dish.id }}" class="item">
@@ -33,5 +33,32 @@
         </div>
     {% endfor %}
 
-     <a href="{% url 'Generator:add_side_dish' %}" class="btn btn-primary">Add side dish</a>
+     
+
+
+    <ul class="pagination mt-4">
+        {% if side_dishes.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ side_dishes.previous_page_number }}">Previous</a>
+            </li>
+        {% endif %}
+    
+        {% for num in side_dishes.paginator.page_range %}
+            {% if side_dishes.number == num %}
+                <li class="page-item active">
+                    <a class="page-link" href="#">{{ num }}</a>
+                </li>
+            {% elif num > side_dishes.number|add:'-3' and num < side_dishes.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    
+        {% if side_dishes.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ side_dishes.next_page_number }}">Next</a>
+            </li>
+        {% endif %}
+    </ul>
 {% endblock %}
