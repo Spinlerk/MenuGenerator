@@ -1,26 +1,56 @@
+
 <!DOCTYPE html>
+{% load static %}
+<head>
+    <title>Daily Menu</title>
+    <style>
+        body::after {
+            content: "";
+            background-image: url("{% static 'images/daily_menu_bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            z-index: -1;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+               
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
+
 <html>
 <head>
     <title>Daily Menu Complete</title>
 </head>
 <body>
-<h1>Daily Menu</h1>
-
-<div>
-    <h3>Soup</h3>
-    <p>{{ soup.name }}</p>
-</div>
-<div>
-    <h3>Main Courses</h3>
-    <ul>
-        {% for main_courses_with_dish in main_courses_with_dishes %}
-            <li>{{ main_courses_with_dish }}</li>
-        {% endfor %}
-    </ul>
-</div>
-<div>
-    <h3>Salad</h3>
-    <p>{{ salad.name }}</p>
+<div class="centered-content">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+                <h1>Daily Menu</h1>
+                
+                <div>
+                    <h2>Soup:</h2>
+                    <p>{{ soup.name }}</p>
+                </div>
+                <div>
+                    <h2>Main Courses</h2>
+                        {% for main_courses_with_dish in main_courses_with_dishes %}
+                            <li>{{ main_courses_with_dish }}</li>
+                        {% endfor %}
+                    </div>
+                <div>
+                    <h2>Salad</h2>
+                    <p>{{ salad.name }}</p>
+                </div>
+        </div>
+    </div>                
 </div>
 </body>
 </html>

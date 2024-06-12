@@ -1,19 +1,27 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Daily Menu</title>
     <style>
-        .input-field {
-            width: 200px; /* Nastavte požadovanou šířku */
-        }
-        .main-course-container {
-            display: flex;
-            align-items: center;
-        }
-        .main-course-container input {
-            margin-right: 10px;
-        }
+        body::after {
+            content: "";
+            background-image: url("{% static 'images/daily_menu_bckgr.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            z-index: -1;
+        }   
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -56,29 +64,33 @@
     </script>
 </head>
 <body>
-<h1>Daily Menu</h1>
-
-<form method="post">
-    {% csrf_token %}
-
-    <h2>Soup</h2>
-    <input type="text" name="soup" class="input-field soup-input" value="{% if soup %}{{ soup.name }}{% endif %}" placeholder="Add a soup">
-
-    <h2>Main Courses</h2>
-    <ul>
-        {% for main_course in main_courses %}
-            <li class="main-course-container">
-                <input type="text" name="main_course_{{ forloop.counter }}" class="input-field main-course-input" value="{{ main_course.name }}" placeholder="Add a main course">
-                <input type="text" name="side_dish_{{ forloop.counter }}" class="input-field side-dish-input" placeholder="Add a side dish">
-            </li>
-        {% endfor %}
-    </ul>
-
-    <h2>Salad</h2>
-    <input type="text" name="salad" class="input-field salad-input" value="{% if salad %}{{ salad.name }}{% endif %}" placeholder="Add a salad">
-
-    <button type="submit">Save Menu</button>
-</form>
+<div class="centered-content">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <h1>Daily Menu</h1>
+            
+            <form method="post">
+                {% csrf_token %}
+            
+                <h2>Soup</h2>
+                <input type="text" name="soup" class="input-field soup-input" value="{% if soup %}{{ soup.name }}{% endif %}" placeholder="Add a soup">
+            
+                <h2>Main Courses</h2>
+                <ul>
+                    {% for main_course in main_courses %}
+                        <li class="main-course-container">
+                            <input type="text" name="main_course_{{ forloop.counter }}" class="input-field main-course-input" value="{{ main_course.name }}" placeholder="Add a main course">
+                            <input type="text" name="side_dish_{{ forloop.counter }}" class="input-field side-dish-input" placeholder="Add a side dish">
+                        </li>
+                    {% endfor %}
+                </ul>
+            
+                <h2>Salad</h2>
+                <input type="text" name="salad" class="input-field salad-input" value="{% if salad %}{{ salad.name }}{% endif %}" placeholder="Add a salad">
+                <div class="button-container">
+                    <button type="submit">Save Menu</button>
+                </div>    
+            </form>
 </body>
 </html>
     
