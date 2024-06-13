@@ -2,19 +2,26 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.functions import Lower
 
-""" Central tables are made for admin, so he can easily edit them. """
 
-
-class CentralMainCourse(models.Model):
+class BaseCourse(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = (Lower('name'),)
+        abstract = True
+
+
+""" Central tables are made for admin, so he can easily edit them. """
+
+
+class CentralMainCourse(BaseCourse):
+
+    class Meta:
+        ordering = (Lower("name"),)
         indexes = [
-            models.Index(fields=['name']),
+            models.Index(fields=["name"]),
         ]
 
     def __str__(self):
@@ -24,122 +31,91 @@ class CentralMainCourse(models.Model):
 """ User tables will be cloned from Central tables when new user is created. """
 
 
-class UserMainCourse(models.Model):
+class UserMainCourse(BaseCourse):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="Main_courses"
     )
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     last_used = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        ordering = (Lower('name'),)
+        ordering = (Lower("name"),)
         indexes = [
-            models.Index(fields=['name']),
+            models.Index(fields=["name"]),
         ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
 
 
-class CentralSoup(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class CentralSoup(BaseCourse):
 
     class Meta:
-        ordering = (Lower('name'),)
+        ordering = (Lower("name"),)
         indexes = [
-            models.Index(fields=['name']),
+            models.Index(fields=["name"]),
         ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
 
 
-class UserSoup(models.Model):
+class UserSoup(BaseCourse):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Soup")
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     last_used = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        ordering = (Lower('name'),)
-        indexes = [
-            models.Index(fields=['name'])
-        ]
+        ordering = (Lower("name"),)
+        indexes = [models.Index(fields=["name"])]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
 
 
-class CentralSalad(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class CentralSalad(BaseCourse):
 
     class Meta:
-        ordering = (Lower('name'),)
+        ordering = (Lower("name"),)
         indexes = [
-            models.Index(fields=['name']),
+            models.Index(fields=["name"]),
         ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
 
 
-class UserSalad(models.Model):
+class UserSalad(BaseCourse):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Salad")
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     last_used = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        ordering = (Lower('name'),)
+        ordering = (Lower("name"),)
         indexes = [
-            models.Index(fields=['name']),
+            models.Index(fields=["name"]),
         ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
 
 
-class CentralSideDishes(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class CentralSideDishes(BaseCourse):
 
     class Meta:
-        ordering = (Lower('name'),)
+        ordering = (Lower("name"),)
         indexes = [
-            models.Index(fields=['name']),
+            models.Index(fields=["name"]),
         ]
 
     def __str__(self):
         return f"{self.name} - {self.description}"
 
 
-class UserSideDishes(models.Model):
+class UserSideDishes(BaseCourse):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="SideDishes")
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Meta:
-    ordering = (Lower('name'),)
-    indexes = [
-        models.Index(fields=['name'])
-    ]
+    ordering = (Lower("name"),)
+    indexes = [models.Index(fields=["name"])]
 
     def __str__(self):
         return f"{self.name} - {self.description}"

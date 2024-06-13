@@ -4,11 +4,19 @@
 
 {% block content %}
     <style>
-        body {
+        body::after {
+            content: "";
             background-image: url("{% static 'images/register_done-bckgr.jpg' %}");
-            background-size: cover;
+            background-size: cover ;
             background-position: center;
             background-repeat: no-repeat;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
     </style>
     <h1> Welcome in Menu Creator, {{new_user.first_name}} !  </h1>

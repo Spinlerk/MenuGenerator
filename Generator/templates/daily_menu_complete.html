@@ -6,15 +6,16 @@
     <style>
         body::after {
             content: "";
-            background-image: url("{% static 'images/daily_menu_bckgr.jpg' %}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-image: url("{% static 'images/daily_menu_complete.jpg' %}"), url("{% static 'images/login-bckgr.jpg '%}");
+            background-size: contain, cover ;
+            background-position: center, center;
+            background-repeat: no-repeat, no-repeat;
             opacity: 0.5;
             width: 100%;
             height: 100%;
             position: fixed;
             top: 0;
+            left: 0;
             z-index: -1;
         }
     </style>
@@ -28,29 +29,28 @@
 <html>
 <head>
     <title>Daily Menu Complete</title>
+    <a href="{% url 'Generator:dashboard' %}">Back to Main Menu</a>
 </head>
 <body>
-<div class="centered-content">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-                <h1>Daily Menu</h1>
-                
-                <div>
-                    <h2>Soup:</h2>
-                    <p>{{ soup.name }}</p>
+<div class="centered-content d-flex align-items-center justify-content-center">
+    <div class="col-12 col-md-6">
+            <h1 style="margin-top: 80px; margin-bottom: 10px">Daily Menu</h1>
+                <hr style=" max-width: 300px">
+            <div>
+                <h2 style="margin-top: 0">Soup</h2>
+                <p>{{ soup.name }}</p>
+            </div>
+            <div>
+                <h2>Main Courses</h2>
+                    {% for main_courses_with_dish in main_courses_with_dishes %}
+                        <li>{{ main_courses_with_dish }}</li>
+                    {% endfor %}
                 </div>
-                <div>
-                    <h2>Main Courses</h2>
-                        {% for main_courses_with_dish in main_courses_with_dishes %}
-                            <li>{{ main_courses_with_dish }}</li>
-                        {% endfor %}
-                    </div>
-                <div>
-                    <h2>Salad</h2>
-                    <p>{{ salad.name }}</p>
-                </div>
-        </div>
-    </div>                
+            <div>
+                <h2>Salad</h2>
+                <p>{{ salad.name }}</p>
+            </div>
+    </div>
 </div>
 </body>
 </html>

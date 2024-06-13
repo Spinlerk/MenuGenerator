@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Daily Menu</title>
     <style>
@@ -16,6 +17,7 @@
             height: 100%;
             position: fixed;
             top: 0;
+            left:0;
             z-index: -1;
         }   
     </style>
@@ -62,12 +64,14 @@
             });
         });
     </script>
+        
 </head>
 <body>
 <div class="centered-content">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6">          
             <h1>Daily Menu</h1>
+            
             
             <form method="post">
                 {% csrf_token %}
@@ -89,8 +93,11 @@
                 <input type="text" name="salad" class="input-field salad-input" value="{% if salad %}{{ salad.name }}{% endif %}" placeholder="Add a salad">
                 <div class="button-container">
                     <button type="submit">Save Menu</button>
+                    <a href="{% url 'Generator:dashboard' %}" class="btn btn-secondary">Back</a>
                 </div>    
             </form>
+        </div>
+    </div>
 </body>
 </html>
     

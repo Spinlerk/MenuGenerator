@@ -14,54 +14,28 @@ from .models import (
 
 """ This functions are made for cloning all Central tables for each user"""
 
+def clone_items(sender, instance, created, model_class, user_model_class):
+    if created and not instance.is_superuser:
+        central_items = model_class.objects.all()
+        for central_item in central_items:
+            user_model_class.objects.create(
+                user=instance,
+                name=central_item.name,
+                description=central_item.description,
+            )
 
 @receiver(post_save, sender=User)
 def clone_main_courses(sender, instance, created, **kwargs):
-    if created and not instance.is_superuser:
-        central_courses = CentralMainCourse.objects.all()
-        for central_course in central_courses:
-            UserMainCourse.objects.create(
-                user=instance,
-                # central_main_course=central_course,
-                name=central_course.name,
-                description=central_course.description,
-            )
-
+    clone_items(sender, instance, created, CentralMainCourse, UserMainCourse)
 
 @receiver(post_save, sender=User)
 def clone_salads(sender, instance, created, **kwargs):
-    if created and not instance.is_superuser:
-        central_salads = CentralSalad.objects.all()
-        for central_salad in central_salads:
-            UserSalad.objects.create(
-                user=instance,
-                # central_salad=central_salad,
-                name=central_salad.name,
-                description=central_salad.description,
-            )
-
+    clone_items(sender, instance, created, CentralSalad, UserSalad)
 
 @receiver(post_save, sender=User)
 def clone_soups(sender, instance, created, **kwargs):
-    if created and not instance.is_superuser:
-        central_soups = CentralSoup.objects.all()
-        for central_soup in central_soups:
-            UserSoup.objects.create(
-                user=instance,
-                # central_soup=central_soup,
-                name=central_soup.name,
-                description=central_soup.description,
-            )
-
+    clone_items(sender, instance, created, CentralSoup, UserSoup)
 
 @receiver(post_save, sender=User)
 def clone_side_dishes(sender, instance, created, **kwargs):
-    if created and not instance.is_superuser:
-        central_side_dishes = CentralSideDishes.objects.all()
-        for central_side_dish in central_side_dishes:
-            UserSideDishes.objects.create(
-                user=instance,
-                # central_side_dish=central_side_dish,
-                name=central_side_dish.name,
-                description=central_side_dish.description,
-            )
+    clone_items(sender, instance, created, CentralSideDishes, UserSideDishes)

@@ -60,7 +60,7 @@ h2 {
     font-family: 'Dancing Script', sans-serif;
     font-size: 45px;
     margin-bottom: 60px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 hr {
@@ -115,7 +115,7 @@ hr-meals {
 }
 
 .centered-content {
-    margin: 10px auto; /* Horizontální centrování */
+    margin: auto auto; /* Horizontální centrování */
     text-align:center; /* Centrovat text */
 }
 
@@ -132,4 +132,20 @@ li {
     list-style-type: none;
     padding: 0;
     margin: 0;
+}
+
+.pagination .page-item .page-link {
+    color: var(--brown); /* Barva číslic a textu */
+    background-color: lightgray; /* Barva pozadí */
+    border-color: var(--brown); /* Barva rámečku */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--gold-color); /* Barva pozadí aktivní stránky */
+    border-color: var(--brown); /* Barva rámečku aktivní stránky */
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #495057; /* Barva pozadí při najetí myší */
+    border-color: #495057; /* Barva rámečku při najetí myší */
 }
