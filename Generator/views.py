@@ -290,7 +290,7 @@ def edit_user_side_dish(request, id):
     )
 
 
-""" prepared delete for modal"""
+""" modal delete"""
 
 
 @login_required
@@ -315,7 +315,7 @@ def create_daily_menu(request):
 
         # Aktualizace nebo vytvoření polévky
         if soup_name:
-            soup, created = UserSoup.objects.get_or_create(name=soup_name)
+            soup, created = UserSoup.objects.get_or_create(name=soup_name, user=request.user)
             soup.last_used = today
             soup.save()
         else:
@@ -325,7 +325,7 @@ def create_daily_menu(request):
         main_courses = []
         if main_course_1_name:
             main_course_1, created = UserMainCourse.objects.get_or_create(
-                name=main_course_1_name
+                name=main_course_1_name, user=request.user
             )
             main_course_1.last_used = today
             main_course_1.save()
@@ -333,7 +333,7 @@ def create_daily_menu(request):
 
         if main_course_2_name:
             main_course_2, created = UserMainCourse.objects.get_or_create(
-                name=main_course_2_name
+                name=main_course_2_name, user=request.user
             )
             main_course_2.last_used = today
             main_course_2.save()
@@ -341,17 +341,11 @@ def create_daily_menu(request):
 
         # Aktualizace nebo vytvoření salátu
         if salad_name:
-            salad, created = UserSalad.objects.get_or_create(name=salad_name)
+            salad, created = UserSalad.objects.get_or_create(name=salad_name, user=request.user)
             salad.last_used = today
             salad.save()
         else:
             salad = None
-
-        # print(side_dish_1_name)
-        # print(side_dish_2_name)
-        #
-        # print([model_to_dict(main_course) for main_course in main_courses])
-        # print(main_courses.values())
 
         main_courses_with_dishes = []
         side_dishes = [side_dish_1_name, side_dish_2_name]
@@ -366,10 +360,8 @@ def create_daily_menu(request):
 
         context = {
             "soup": soup,
-            # 'main_courses': main_courses,
             "main_courses_with_dishes": main_courses_with_dishes,
             "salad": salad,
-            # 'side_dishes': [side_dish_1_name, side_dish_2_name]
         }
 
         return render(request, "daily_menu_complete.html", context)
