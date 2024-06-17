@@ -2,7 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.functions import Lower
 
-from django.db import models
+"""Models are models of database tables"""
+
+
+"""# A testing model that extends the User model with a one-to-one relationship. 
+The Profile model is linked directly to the Django User model."""
 
 
 class Profile(models.Model):
@@ -11,6 +15,9 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+"""An abstract base class for course-related models, containing common fields like name, 
+description, created_at, and updated_at."""
 
 class BaseCourse(models.Model):
     name = models.CharField(max_length=100)
@@ -22,7 +29,8 @@ class BaseCourse(models.Model):
         abstract = True
 
 
-""" Central tables are made for admin, so he can easily edit them. """
+""" Models for the central database, intended for admin management. 
+These models inherit from BaseCourse and include additional indexing and ordering. """
 
 
 class CentralMainCourse(BaseCourse):
@@ -37,7 +45,9 @@ class CentralMainCourse(BaseCourse):
         return f"{self.name} - {self.description}"
 
 
-""" User tables will be cloned from Central tables when new user is created. """
+""" User-specific models that clone central models when a new user is created. 
+After cloning just user can manage his database whit tools like adding, deleting and editing courses.
+These models include a foreign key relationship to the User model and additional fields such as last_used. """
 
 
 class UserMainCourse(BaseCourse):
@@ -129,6 +139,10 @@ class Meta:
     def __str__(self):
         return f"{self.name} - {self.description}"
 
+
+"""Model for creatíng daily menu function - A model to represent a user's daily menu, 
+linking to user-specific courses (soups, main courses, salads, and side dishes) and including the date of the menu.
+The DailyMenu model creates a daily menu for users, allowing multiple main courses and side dishes."""
 
 class DailyMenu(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

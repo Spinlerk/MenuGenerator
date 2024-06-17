@@ -9,7 +9,7 @@ from .models import (
     CentralSideDishes,
     UserSideDishes,
 )
-
+""" These classes tel how databases below will be displayed in Django admin"""
 
 class CentralMainCourseAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "created_at", "updated_at")

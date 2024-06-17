@@ -1,4 +1,3 @@
-from django.forms import model_to_dict
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -14,23 +13,24 @@ from .forms import (
 )
 from django.contrib.auth.views import LoginView
 
-""" Soup """
-
-# Tady jenom ty views k tem polevkam
-
-""" Main course """
 
 """Views for user main courses"""
 
 
 @login_required
 def index(request):
+    """Renders the dashboard for logged-in users"""
     return render(request, "dashboard.html")
+
 
 
 def register(request):
     form = UserRegistrationForm()
-
+    """
+    Handles user registration
+    Renders the registration form an process for submission
+    Ensures the new user is not admin or superuser
+    """
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -48,6 +48,9 @@ def register(request):
 
 @login_required
 def user_main_courses(request):
+    """
+    Displays the main course for the logged in users with pagination
+    """
     main_courses = UserMainCourse.objects.filter(user=request.user)
 
     paginator = Paginator(main_courses, 10)
@@ -68,6 +71,10 @@ def user_main_courses(request):
 
 @login_required
 def add_main_course(request):
+    """
+    Allows the user to add a new main course
+    """
+
     if request.method == "POST":
         form = UserMainCourseForm(request.POST)
         if form.is_valid():
@@ -84,6 +91,10 @@ def add_main_course(request):
 
 @login_required
 def edit_user_main_courses(request, id):
+    """
+    Allows the user to edit an existing main course
+    """
+
     main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
     if request.method == "POST":
         form = UserMainCourseForm(request.POST, instance=main_course)
@@ -102,9 +113,11 @@ def edit_user_main_courses(request, id):
 
 """ delete modal"""
 
-
 @login_required
 def delete_user_main_course(request, id):
+    """
+    Deletes the main course for the logged in user
+    """
     main_course = get_object_or_404(UserMainCourse, id=id, user=request.user)
     main_course.delete()
 
@@ -116,6 +129,7 @@ def delete_user_main_course(request, id):
 
 @login_required
 def user_soups(request):
+    """Displays the soups for the logged in user with pagination"""
     soups = UserSoup.objects.filter(user=request.user)
 
     paginator = Paginator(soups, 10)
@@ -132,6 +146,7 @@ def user_soups(request):
 
 @login_required
 def add_user_soup(request):
+    """Allows the user to add a new soup"""
     if request.method == "POST":
         form = UserSoupForm(request.POST)
         if form.is_valid():
@@ -146,6 +161,7 @@ def add_user_soup(request):
 
 @login_required
 def edit_user_soup(request, id):
+    """Allows the user to edit an existing soup"""
     soup = get_object_or_404(UserSoup, id=id, user=request.user)
     if request.method == "POST":
         form = UserSoupForm(request.POST, instance=soup)
@@ -160,11 +176,12 @@ def edit_user_soup(request, id):
     )
 
 
-""" prepared delete for modal"""
+""" modal delete"""
 
 
 @login_required
 def delete_user_soup(request, id):
+    """Allows the user to delete an existing soup"""
     soup = get_object_or_404(UserSoup, id=id, user=request.user)
     soup.delete()
 
@@ -176,6 +193,7 @@ def delete_user_soup(request, id):
 
 @login_required
 def user_salads(request):
+    """Displays the salads for the logged in user with pagination"""
     salads = UserSalad.objects.filter(user=request.user)
 
     paginator = Paginator(salads, 10)
@@ -194,6 +212,7 @@ def user_salads(request):
 
 @login_required
 def add_user_salad(request):
+    """Allows the user to add a new salad"""
     if request.method == "POST":
         form = UserSaladForm(request.POST)
         if form.is_valid():
@@ -208,6 +227,7 @@ def add_user_salad(request):
 
 @login_required
 def edit_user_salad(request, id):
+    """Allows the user to edit an existing salad"""
     salad = get_object_or_404(UserSalad, id=id, user=request.user)
     if request.method == "POST":
         form = UserSaladForm(request.POST, instance=salad)
@@ -224,11 +244,12 @@ def edit_user_salad(request, id):
     )
 
 
-""" prepared delete for modal"""
+""" modal delete"""
 
 
 @login_required
 def delete_user_salad(request, id):
+    """Allows the user to delete an existing salad"""
     salad = get_object_or_404(UserSalad, id=id, user=request.user)
     salad.delete()
 
@@ -240,6 +261,7 @@ def delete_user_salad(request, id):
 
 @login_required
 def user_side_dishes(request):
+    """Displays the side dishes for the logged in user with pagination"""
     side_dishes = UserSideDishes.objects.filter(user=request.user)
 
     paginator = Paginator(side_dishes, 10)
@@ -260,6 +282,7 @@ def user_side_dishes(request):
 
 @login_required
 def add_user_side_dish(request):
+    """Allows the user to add a new side dish"""
     if request.method == "POST":
         form = UserSideDishesForm(request.POST)
         if form.is_valid():
@@ -274,6 +297,7 @@ def add_user_side_dish(request):
 
 @login_required
 def edit_user_side_dish(request, id):
+    """Allows the user to edit an existing side dish"""
     side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
     if request.method == "POST":
         form = UserSideDishesForm(request.POST, instance=side_dish)
@@ -290,21 +314,25 @@ def edit_user_side_dish(request, id):
     )
 
 
-""" modal delete"""
+""" view for modal delete"""
 
 
 @login_required
 def delete_user_side_dish(request, id):
+    """Allows the user to delete an existing side dish"""
     side_dish = get_object_or_404(UserSideDishes, id=id, user=request.user)
     side_dish.delete()
 
     return HttpResponse("ok")
 
 
+"""views for Daily menu"""
+
+
 @login_required
 def create_daily_menu(request):
     if request.method == "POST":
-        # Zpracování odeslaného formuláře
+        # Processing of the submitted form
         today = timezone.now()
         soup_name = request.POST.get("soup")
         main_course_1_name = request.POST.get("main_course_1")
@@ -313,15 +341,19 @@ def create_daily_menu(request):
         side_dish_2_name = request.POST.get("side_dish_2")
         salad_name = request.POST.get("salad")
 
-        # Aktualizace nebo vytvoření polévky
+
+        """ If the item doesn't exist in database, it will be created and added to the database '"""
+        # Updating last used date or creating soup
         if soup_name:
-            soup, created = UserSoup.objects.get_or_create(name=soup_name, user=request.user)
+            soup, created = UserSoup.objects.get_or_create(
+                name=soup_name, user=request.user
+            )
             soup.last_used = today
             soup.save()
         else:
-            soup = None
+            soup = None # if item would not be inputted it will be set up as none
 
-        # Aktualizace nebo vytvoření hlavních chodů a příloh
+        # Updating last used date or creating main dishes and side dishes
         main_courses = []
         if main_course_1_name:
             main_course_1, created = UserMainCourse.objects.get_or_create(
@@ -339,21 +371,26 @@ def create_daily_menu(request):
             main_course_2.save()
             main_courses.append(main_course_2)
 
-        # Aktualizace nebo vytvoření salátu
+        # Updating last used date or creating salad
         if salad_name:
-            salad, created = UserSalad.objects.get_or_create(name=salad_name, user=request.user)
+            salad, created = UserSalad.objects.get_or_create(
+                name=salad_name, user=request.user
+            )
             salad.last_used = today
             salad.save()
         else:
-            salad = None
+            salad = None  # if item would not be inputted it will be set up as none
 
         main_courses_with_dishes = []
         side_dishes = [side_dish_1_name, side_dish_2_name]
 
         for index, main_course in enumerate(main_courses):
+            # going through main courses list,
+            # the index variable is used to track the order of the main courses in the list.
             text = main_course.name
 
             if index < len(side_dishes):
+                # Checks if the current index is less than the length of the side_dishes list.
                 text = f"{text}, {side_dishes[index]}"
 
             main_courses_with_dishes.append(text)
@@ -366,19 +403,20 @@ def create_daily_menu(request):
 
         return render(request, "daily_menu_complete.html", context)
 
-    # Výchozí zobrazení - vygenerování nejdéle nepoužitých jídel
-    soup = UserSoup.objects.filter(last_used__isnull=True).first()
+    """Default view - generating the longest unused dishes"""
+    soup = UserSoup.objects.filter(last_used__isnull=True).first()  # taking the never used soup or last used soup
     if not soup:
         soup = UserSoup.objects.order_by("last_used").first()
 
-    main_courses = list(UserMainCourse.objects.filter(last_used__isnull=True)[:2])
-    if len(main_courses) < 2:
+    main_courses = list(UserMainCourse.objects.filter(last_used__isnull=True)[:2])  # gets and stores up to 2 instances
+    if len(main_courses) < 2:   # check if main curses list contains less than 2 items
         additional_courses = list(
             UserMainCourse.objects.order_by("last_used")[: 2 - len(main_courses)]
+            # if main_courses has less than 2 entries, it gets additional courses.
         )
         main_courses.extend(additional_courses)
 
-    salad = UserSalad.objects.filter(last_used__isnull=True).first()
+    salad = UserSalad.objects.filter(last_used__isnull=True).first()  # taking the never used soup or last used salad
     if not salad:
         salad = UserSalad.objects.order_by("last_used").first()
 
@@ -398,6 +436,7 @@ def create_daily_menu(request):
 
 
 class CustomLoginView(LoginView):
+    """Custom login view to redirect authenticated users to dashboard if they try to go to login page"""
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect("Generator:dashboard")
