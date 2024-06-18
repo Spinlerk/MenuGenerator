@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Do you want to really delete this course?</p>
+                <p>Do you really want to delete this course?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary cancel-button" data-bs-dismiss="modal">Cancel</button>
@@ -17,18 +17,26 @@
 </div>
 
 <script>
+    // Adding an event listener for the delete button click event
     document.querySelector(".delete-course-{{ id }}").addEventListener("click", (e) => {
+        // Get the clicked button element
         const target = e.target;
+        // Get the course ID from the data-id attribute
         const id = target.getAttribute("data-id");
 
+        // Send a fetch request to delete the course
         fetch(`/delete-course/${id}`)
             .then(() => {
+                // Select the course element in the DOM and remove it
                 const course = document.querySelector(`#main-course-${id}`);
                 course.remove();
 
+                // Simulate a click on the cancel button to close the modal
                 target.parentNode.querySelector(".cancel-button").click();
+                // Remove the modal backdrop from the DOM
                 document.querySelector(".modal-backdrop").remove();
             }).catch(() => {
+            // Log an error message if the fetch request fails
             console.log("Error");
         });
     });

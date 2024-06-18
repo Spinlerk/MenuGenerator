@@ -1,12 +1,13 @@
-{% extends "base.html" %}
-{% load widget_tweaks %}
-{% load static %}
-{% block content %}
+{% extends "base.html" %}  {# Extends the base.html template #}
+{% load widget_tweaks %}  {# Loads widget tweaks for form styling #}
+{% load static %}         {# Loads static files like images #}
+
+{% block content %}  {# Begins the content block #}
 
     <style>
         body::after {
             content: "";
-            background-image: url("{% static 'images/add_bckgr.jpg' %}");
+            background-image: url("{% static 'images/add_bckgr.jpg' %}");  {# Sets background image #}
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -18,29 +19,32 @@
             z-index: -1;
         }
     </style>
-    <div class="centered-content">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-                <h1>Add Salad</h1>
-                <form method="post" action="{% url 'Generator:add_salad' %}">
-                    {% csrf_token %}
+
+    <div class="centered-content">  {# Div for centering content #}
+        <div class="row justify-content-center">  {# Row for centering content horizontally #}
+            <div class="col-12 col-md-6">  {# Column sizing for medium and larger screens #}
+                <h1>Add Salad</h1>  {# Heading for the add salad form #}
+                <form method="post" action="{% url 'Generator:add_salad' %}">  {# Form for adding salad #}
+                    {% csrf_token %}  {# CSRF token for security #}
                     <div class="mb-3">
-                        {{ form.name.errors }}
-                        <label class="mb-1" for="{{ form.name.id_for_label }}">Name</label>
-                        {{ form.name|add_class:"form-control" }}
+                        {{ form.name.errors }}  {# Displays errors related to the name field #}
+                        <label class="mb-1" for="{{ form.name.id_for_label }}">Name</label>  {# Label for name field #}
+                        {{ form.name|add_class:"form-control" }}  {# Renders name field with Bootstrap form-control class #}
                     </div>
 
                     <div class="mb-3">
-                        {{ form.username.errors }}
-                        <label class="mb-1" for="{{ form.description.id_for_label }}">Description</label>
-                        {{ form.description|add_class:"form-control" }}
+                        {{ form.username.errors }}  {# Displays errors related to the username field #}
+                        <label class="mb-1" for="{{ form.description.id_for_label }}">Description</label>  {# Label for description field #}
+                        {{ form.description|add_class:"form-control" }}  {# Renders description field with Bootstrap form-control class #}
                     </div>
-                    <div class="button-container">
-                        <button class="btn btn-primary">Save</button>
-                        <a href="{% url 'Generator:salads' %}" class="btn btn-secondary">Back</a>
+
+                    <div class="button-container">  {# Container for buttons #}
+                        <button class="btn btn-primary">Save</button>  {# Submit button to add salad #}
+                        <a href="{% url 'Generator:salads' %}" class="btn btn-secondary">Back</a>  {# Link to go back to salads list #}
                     </div>
                 </form>
             </div>
         </div>
     </div>
-{% endblock %}
+
+{% endblock %}  {# Ends the content block #}

@@ -1,12 +1,12 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %} Soups {% endblock %}
+{% extends "base.html" %}  {# Extends the base.html template #}
+{% load static %}         {# Loads static files like images #}
+{% block title %} Soups {% endblock %}  {# Sets the title of the page #}
 
-{% block content %}
+{% block content %}  {# Begins the content block #}
     <style>
         body::after {
             content: "";
-            background-image: url("{% static 'images/soup_bckgr.jpg' %}");
+            background-image: url("{% static 'images/soup_bckgr.jpg' %}");  {# Background image for soups #}
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -19,43 +19,43 @@
         }
     </style>
 
-    {% url 'Generator:add_soup' as add_soup_url %}
-    {% include "partials/section_header.html" with title="Your Soups" create_text="Add soup" url_link=add_soup_url %}
+    {% url 'Generator:add_soup' as add_soup_url %}  {# URL for adding a new soup #}
+    {% include "partials/section_header.html" with title="Your Soups" create_text="Add soup" url_link=add_soup_url %}  {# Includes a section header with link to add a new soup #}
 
-    {% for soup in soups %}
-        <div id="soup-{{ soup.id }}" class="item">
-            <div>{{ soup.name }}</div>
-            <div class="item-actions">
-            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup-{{ soup.id }}">Delete</button>
-            {% include "modals/delete_soup.html" with id=soup.id %}
-            <a href="{% url 'Generator:edit_soup' id=soup.id %}" class="btn btn-primary">Edit</a>
+    {% for soup in soups %}  {# Iterates over each soup in the soups queryset #}
+        <div id="soup-{{ soup.id }}" class="item">  {# Div for each soup item #}
+            <div>{{ soup.name }}</div>  {# Displays the soup name #}
+            <div class="item-actions">  {# Div for item actions (edit, delete) #}
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-soup-{{ soup.id }}">Delete</button>  {# Button to delete soup, triggers modal #}
+                {% include "modals/delete_soup.html" with id=soup.id %}  {# Includes delete confirmation modal for soup #}
+                <a href="{% url 'Generator:edit_soup' id=soup.id %}" class="btn btn-primary">Edit</a>  {# Link to edit soup #}
             </div>
         </div>
     {% endfor %}
 
-    <ul class="pagination mt-4">
-        {% if soups.has_previous %}
+    <ul class="pagination mt-4">  {# Pagination for soups #}
+        {% if soups.has_previous %}  {# If there's a previous page #}
             <li class="page-item">
-                <a class="page-link" href="?page={{ soups.previous_page_number }}">Previous</a>
+                <a class="page-link" href="?page={{ soups.previous_page_number }}">Previous</a>  {# Link to previous page #}
             </li>
         {% endif %}
 
-        {% for num in soups.paginator.page_range %}
-            {% if soups.number == num %}
+        {% for num in soups.paginator.page_range %}  {# Iterate over page numbers #}
+            {% if soups.number == num %}  {# If current page #}
                 <li class="page-item active">
-                    <a class="page-link" href="#">{{ num }}</a>
+                    <a class="page-link" href="#">{{ num }}</a>  {# Active page link (not clickable) #}
                 </li>
-            {% elif num > soups.number|add:'-3' and num < soups.number|add:'3' %}
+            {% elif num > soups.number|add:'-3' and num < soups.number|add:'3' %}  {# Display nearby page links #}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>  {# Link to other pages #}
                 </li>
             {% endif %}
         {% endfor %}
 
-        {% if soups.has_next %}
+        {% if soups.has_next %}  {# If there's a next page #}
             <li class="page-item">
-                <a class="page-link" href="?page={{ soups.next_page_number }}">Next</a>
+                <a class="page-link" href="?page={{ soups.next_page_number }}">Next</a>  {# Link to next page #}
             </li>
         {% endif %}
     </ul>
-{% endblock %}
+{% endblock %}  {# Ends the content b

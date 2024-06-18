@@ -4,10 +4,11 @@
 
 {% block content %}
     <style>
+        /* Styling the body to add a background image */
         body::after {
             content: "";
             background-image: url("{% static 'images/register_done-bckgr.jpg' %}");
-            background-size: cover ;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.5;
@@ -19,10 +20,14 @@
             z-index: -1;
         }
     </style>
-    <h1> Welcome in Menu Creator, {{new_user.first_name}} !  </h1>
 
-    <p>your account has been successfully created </p>
+    <!-- Welcome message with the new user's first name -->
+    <h1> Welcome to Menu Creator, {{ new_user.first_name }}! </h1>
 
+    <!-- Confirmation message -->
+    <p>Your account has been successfully created.</p>
+
+    <!-- Link to the login page -->
     <p>
         Now you can <a class="btn btn-primary" href="{% url 'Generator:login' %}">Log in</a>
     </p>

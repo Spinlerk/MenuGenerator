@@ -1,9 +1,14 @@
+<!-- Section Header -->
 <div class="d-flex align-items-center justify-content-between">
+    <!-- Left Section: Back Button and Title -->
     <div class="d-flex align-items-center">
+        <!-- Back Button -->
         <a href="{% url 'Generator:dashboard' %}" class="btn btn-link">
             <i class="bi bi-arrow-left arrow-back"></i>
         </a>
+        <!-- Section Title -->
         <h1 class="ms-2">{{ title }}</h1>
     </div>
+    <!-- Right Section: Create Button -->
     <a href="{{ url_link }}" class="btn btn-primary">{{ create_text }}</a>
 </div>

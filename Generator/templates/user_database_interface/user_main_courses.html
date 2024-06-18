@@ -1,12 +1,12 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %} Main courses {% endblock %}
+{% extends "base.html" %}  {# Extends the base.html template #}
+{% load static %}         {# Loads static files like images #}
+{% block title %} Main courses {% endblock %}  {# Sets the title of the page #}
 
-{% block content %}
+{% block content %}  {# Begins the content block #}
     <style>
         body::after {
             content: "";
-            background-image: url("{% static 'images/main_course_bckgr.jpg' %}");
+            background-image: url("{% static 'images/main_course_bckgr.jpg' %}");  {# Background image for main courses #}
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -18,44 +18,46 @@
             z-index: -1;
         }
     </style>
-    {% url 'Generator:add_main_course' as add_main_course_url %}
-    {% include "partials/section_header.html" with title="Your Main Courses" create_text="Add main course" url_link=add_main_course_url %}
 
-    {% for main_course in main_courses %}
-        <div id="main-course-{{ main_course.id }}" class="item">
-            <div>{{ main_course.name }}</div>
-            <div class="item-actions">
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-main-course-{{ main_course.id }}">Delete</button>
-                {% include "modals/delete_main_course.html" with id=main_course.id %}
-                <a href="{% url 'Generator:edit_main_course' id=main_course.id %}" class="btn btn-primary">Edit</a>
+    {% url 'Generator:add_main_course' as add_main_course_url %}  {# URL for adding a new main course #}
+    {% include "partials/section_header.html" with title="Your Main Courses" create_text="Add main course" url_link=add_main_course_url %}  {# Includes a section header with link to add a new main course #}
+
+    {% for main_course in main_courses %}  {# Iterates over each main course #}
+        <div id="main-course-{{ main_course.id }}" class="item">  {# Div for each main course item #}
+            <div>{{ main_course.name }}</div>  {# Displays the main course name #}
+            <div class="item-actions">  {# Div for item actions (edit, delete) #}
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-main-course-{{ main_course.id }}">Delete</button>  {# Button to delete main course, opens modal #}
+                {% include "modals/delete_main_course.html" with id=main_course.id %}  {# Includes delete confirmation modal for main course #}
+                <a href="{% url 'Generator:edit_main_course' id=main_course.id %}" class="btn btn-primary">Edit</a>  {# Link to edit main course #}
             </div>
         </div>
-        <hr class="hr-meals">
+        <hr class="hr-meals">  {# Horizontal rule for separation #}
     {% endfor %}
 
-    <ul class="pagination mt-4">
-        {% if main_courses.has_previous %}
+    <ul class="pagination mt-4">  {# Pagination links #}
+        {% if main_courses.has_previous %}  {# If there is a previous page #}
             <li class="page-item">
-                <a class="page-link" href="?page={{ main_courses.previous_page_number }}">Previous</a>
+                <a class="page-link" href="?page={{ main_courses.previous_page_number }}">Previous</a>  {# Link to previous page #}
             </li>
         {% endif %}
 
-        {% for num in main_courses.paginator.page_range %}
-            {% if main_courses.number == num %}
+        {% for num in main_courses.paginator.page_range %}  {# Loop through page numbers #}
+            {% if main_courses.number == num %}  {# If current page #}
                 <li class="page-item active">
-                    <a class="page-link" href="#">{{ num }}</a>
+                    <a class="page-link" href="#">{{ num }}</a>  {# Display current page number #}
                 </li>
-            {% elif num > main_courses.number|add:'-3' and num < main_courses.number|add:'3' %}
+            {% elif num > main_courses.number|add:'-3' and num < main_courses.number|add:'3' %}  {# Display nearby pages #}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ num }}">{{ num }}</a>
                 </li>
             {% endif %}
         {% endfor %}
 
-        {% if main_courses.has_next %}
+        {% if main_courses.has_next %}  {# If there is a next page #}
             <li class="page-item">
-                <a class="page-link" href="?page={{ main_courses.next_page_number }}">Next</a>
+                <a class="page-link" href="?page={{ main_courses.next_page_number }}">Next</a>  {# Link to next page #}
             </li>
         {% endif %}
     </ul>
-{% endblock %}
+{% endblock %}  {# Ends the content block #}
+

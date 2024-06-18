@@ -1,15 +1,21 @@
 <div class="modal" id="delete-salad-{{ id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
+            <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title">Delete salad</h5>
+                <!-- Button to close the modal -->
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <!-- Modal Body -->
             <div class="modal-body">
                 <p>Do you want to really delete this salad?</p>
             </div>
+            <!-- Modal Footer -->
             <div class="modal-footer">
+                <!-- Button to cancel the action and close the modal -->
                 <button type="button" class="btn btn-secondary cancel-button" data-bs-dismiss="modal">Cancel</button>
+                <!-- Button to confirm the deletion -->
                 <button type="button" class="btn btn-primary delete-salad-{{ id }}" data-id="{{ id }}">Yes</button>
             </div>
         </div>
@@ -17,18 +23,26 @@
 </div>
 
 <script>
+    // Adding an event listener for the delete button click event
     document.querySelector(".delete-salad-{{ id }}").addEventListener("click", (e) => {
+        // Get the clicked button element
         const target = e.target;
+        // Get the salad ID from the data-id attribute
         const id = target.getAttribute("data-id");
 
+        // Send a fetch request to delete the salad
         fetch(`/delete-salad/${id}`)
             .then(() => {
+                // Select the salad element in the DOM and remove it
                 const salad = document.querySelector(`#salad-${id}`);
                 salad.remove();
 
+                // Simulate a click on the cancel button to close the modal
                 target.parentNode.querySelector(".cancel-button").click();
+                // Remove the modal backdrop from the DOM
                 document.querySelector(".modal-backdrop").remove();
             }).catch(() => {
+            // Log an error message if the fetch request fails
             console.log("Error");
         });
     });

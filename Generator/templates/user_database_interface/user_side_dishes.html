@@ -1,12 +1,12 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %} Side dishes {% endblock %}
+{% extends "base.html" %}  {# Extends the base.html template #}
+{% load static %}         {# Loads static files like images #}
+{% block title %} Side dishes {% endblock %}  {# Sets the title of the page #}
 
-{% block content %}
+{% block content %}  {# Begins the content block #}
     <style>
         body::after {
             content: "";
-            background-image: url("{% static 'images/side_dish_bckgr.jpg' %}");
+            background-image: url("{% static 'images/side_dish_bckgr.jpg' %}");  {# Background image for side dishes #}
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -18,25 +18,27 @@
             z-index: -1;
         }
     </style>
-    {% url 'Generator:add_side_dish' as add_side_dish_url %}
-    {% include "partials/section_header.html" with title="Your Side dish" create_text="Add Side dish" url_link=add_side_dish_url %}
-    
-    {% for side_dish in side_dishes %}
-        <div id="side-dish-{{ side_dish.id }}" class="item">
-            <div>{{ side_dish.name }}</div>
-            <div class="item-actions">
-             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-side-dish-{{ side_dish.id }}">Delete</button>
 
-             {% include "modals/delete_side_dish.html" with id=side_dish.id %}
-             <a href="{% url 'Generator:edit_side_dish' id=side_dish.id %}" class="btn btn-primary">Edit</a>
+    {% url 'Generator:add_side_dish' as add_side_dish_url %}  {# URL for adding a new side dish #}
+    {% include "partials/section_header.html" with title="Your Side dish" create_text="Add Side dish" url_link=add_side_dish_url %}  {# Includes a section header with link to add a new side dish #}
+
+    {% for side_dish in side_dishes %}  {# Iterates over each side dish in the side_dishes queryset #}
+        <div id="side-dish-{{ side_dish.id }}" class="item">  {# Div for each side dish item #}
+            <div>{{ side_dish.name }}</div>  {# Displays the side dish name #}
+            <div class="item-actions">  {# Div for item actions (edit, delete) #}
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-side-dish-{{ side_dish.id }}">Delete</button>  {# Button to delete side dish, triggers modal #}
+                {% include "modals/delete_side_dish.html" with id=side_dish.id %}  {# Includes delete confirmation modal for side dish #}
+                <a href="{% url 'Generator:edit_side_dish' id=side_dish.id %}" class="btn btn-primary">Edit</a>  {# Link to edit side dish #}
             </div>
         </div>
     {% endfor %}
+{% endblock %}  {# Ends the content block #}
 
-     
 
 
-    <ul class="pagination mt-4">
+
+
+<ul class="pagination mt-4">
         {% if side_dishes.has_previous %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ side_dishes.previous_page_number }}">Previous</a>

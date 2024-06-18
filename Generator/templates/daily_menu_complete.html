@@ -1,56 +1,79 @@
-
 <!DOCTYPE html>
-{% load static %}
+<html lang="en">
+
 <head>
-    <title>Daily Menu</title>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Menu Complete</title>
     <style>
+        /* Styling for background images */
         body::after {
             content: "";
-            background-image: url("{% static 'images/daily_menu_complete.jpg' %}"), url("{% static 'images/login-bckgr.jpg '%}");
-            background-size: contain, cover ;
-            background-position: center, center;
-            background-repeat: no-repeat, no-repeat;
-            opacity: 0.5;
+            background-image: url("{% static 'images/daily_menu_complete.jpg' %}"), url("{% static 'images/login-bckgr.jpg' %}");
+            background-size: contain, cover; /* Set background size */
+            background-position: center, center; /* Center the background images */
+            background-repeat: no-repeat, no-repeat; /* Prevent background image repetition */
+            opacity: 0.5; /* Set opacity for background overlay */
             width: 100%;
             height: 100%;
             position: fixed;
             top: 0;
             left: 0;
-            z-index: -1;
+            z-index: -1; /* Ensure background remains behind content */
+        }
+
+        /* Additional styles for layout and typography */
+        .centered-content {
+            margin-top: 100px; /* Adjust margin top as needed */
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-family: 'Dancing Script', cursive; /* Google Font for headings */
+        }
+
+        hr {
+            margin-top: 10px; /* Top margin for hr */
+            margin-bottom: 20px; /* Bottom margin for hr */
+            border-color: #ccc; /* Border color for hr */
+        }
+
+        .main-menu-link {
+            display: block; /* Display as block for full width */
+            margin-bottom: 20px; /* Bottom margin for spacing */
         }
     </style>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-               
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-
-
-<html>
-<head>
-    <title>Daily Menu Complete</title>
-    <a href="{% url 'Generator:dashboard' %}">Back to Main Menu</a>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link to custom CSS file -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet"> <!-- Google Fonts link -->
 </head>
+
 <body>
-<div class="centered-content d-flex align-items-center justify-content-center">
+<a href="{% url 'Generator:dashboard' %}" class="main-menu-link">Back to Main Menu</a> <!-- Link to main menu -->
+
+<div class="centered-content">
     <div class="col-12 col-md-6">
-            <h1 style="margin-top: 80px; margin-bottom: 10px">Daily Menu</h1>
-                <hr style=" max-width: 300px">
-            <div>
-                <h2 style="margin-top: 0">Soup</h2>
-                <p>{{ soup.name }}</p>
-            </div>
-            <div>
-                <h2>Main Courses</h2>
-                    {% for main_courses_with_dish in main_courses_with_dishes %}
-                        <li>{{ main_courses_with_dish }}</li>
-                    {% endfor %}
-                </div>
-            <div>
-                <h2>Salad</h2>
-                <p>{{ salad.name }}</p>
-            </div>
+        <h1>Daily Menu</h1> <!-- Main heading -->
+        <hr> <!-- Horizontal rule -->
+        <div>
+            <h2>Soup</h2> <!-- Subheading for soup -->
+            <p>{{ soup.name }}</p> <!-- Display soup name -->
+        </div>
+        <div>
+            <h2>Main Courses</h2> <!-- Subheading for main courses -->
+            <ul>
+                {% for main_course_with_dish in main_courses_with_dishes %}
+                    <li>{{ main_course_with_dish }}</li> <!-- Display each main course with associated dish -->
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2>Salad</h2> <!-- Subheading for salad -->
+            <p>{{ salad.name }}</p> <!-- Display salad name -->
+        </div>
     </div>
 </div>
+
 </body>
+
 </html>

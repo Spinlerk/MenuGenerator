@@ -5,10 +5,11 @@
 
 {% block content %}
     <style>
+        /* Styling the body to add a background image */
         body::after {
             content: "";
             background-image: url("{% static 'images/register-bckgr.jpg' %}");
-            background-size: cover ;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.5;
@@ -21,56 +22,70 @@
         }
     </style>
     <div class="d-flex flex-column align-items-center">
-    <header>
-        <h1> Menu creator </h1>
-        <hr class="hr">
-    </header>
-    <h2>Create new account</h2>
+        <header>
+            <h1>Menu Creator</h1>
+            <hr class="hr">
+        </header>
+        <h2>Create New Account</h2>
 
-    <div class="row w-100 d-flex justify-content-center">
-        <div class="col-12 col-md-5">
-            <form action="{% url 'Generator:register' %}" method="post">
-                <div class="mb-3">
-                    {{ form.username.errors }}
-                    <label class="mb-1" for="{{ form.username.id_for_label }}">Username</label>
-                    {{ form.username|add_class:"form-control" }}
+        <div class="row w-100 d-flex justify-content-center">
+            <div class="col-12 col-md-5">
+                <!-- Registration form -->
+                <form action="{% url 'Generator:register' %}" method="post">
+                    <div class="mb-3">
+                        <!-- Display form field errors for username -->
+                        {{ form.username.errors }}
+                        <label class="mb-1" for="{{ form.username.id_for_label }}">Username</label>
+                        <!-- Render username field with additional CSS class -->
+                        {{ form.username|add_class:"form-control" }}
 
-                    {% if form.username.help_text %}
-                        <div class="form-text" id="{{ form.username.auto_id }}_helptext">
-                            {{ form.username.help_text|safe }}
-                        </div>
-                    {% endif %}
-                </div>
+                        {% if form.username.help_text %}
+                            <div class="form-text" id="{{ form.username.auto_id }}_helptext">
+                                {{ form.username.help_text|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
 
-                <div class="mb-3">
-                    {{ form.email.errors }}
-                    <label class="mb-1" for="{{ form.email.id_for_label }}">Email</label>
-                    {{ form.email|add_class:"form-control" }}
-                </div>
+                    <div class="mb-3">
+                        <!-- Display form field errors for email -->
+                        {{ form.email.errors }}
+                        <label class="mb-1" for="{{ form.email.id_for_label }}">Email</label>
+                        <!-- Render email field with additional CSS class -->
+                        {{ form.email|add_class:"form-control" }}
+                    </div>
 
-                <div class="mb-3">
-                    {{ form.first_name.errors }}
-                    <label class="mb-1" for="{{ form.first_name.id_for_label }}">First name</label>
-                    {{ form.first_name|add_class:"form-control" }}
-                </div>
+                    <div class="mb-3">
+                        <!-- Display form field errors for first name -->
+                        {{ form.first_name.errors }}
+                        <label class="mb-1" for="{{ form.first_name.id_for_label }}">First name</label>
+                        <!-- Render first name field with additional CSS class -->
+                        {{ form.first_name|add_class:"form-control" }}
+                    </div>
 
-                <div class="mb-3">
-                    {{ form.password.errors }}
-                    <label class="mb-1" for="{{ form.password.id_for_label }}">Password</label>
-                    {{ form.password|add_class:"form-control" }}
-                </div>
+                    <div class="mb-3">
+                        <!-- Display form field errors for password -->
+                        {{ form.password.errors }}
+                        <label class="mb-1" for="{{ form.password.id_for_label }}">Password</label>
+                        <!-- Render password field with additional CSS class -->
+                        {{ form.password|add_class:"form-control" }}
+                    </div>
 
-                <div class="mb-3">
-                    {{ form.password2.errors }}
-                    <label class="mb-1" for="{{ form.password2.id_for_label }}">Repeat password</label>
-                    {{ form.password2|add_class:"form-control" }}
-                </div>
+                    <div class="mb-3">
+                        <!-- Display form field errors for password confirmation -->
+                        {{ form.password2.errors }}
+                        <label class="mb-1" for="{{ form.password2.id_for_label }}">Repeat password</label>
+                        <!-- Render password confirmation field with additional CSS class -->
+                        {{ form.password2|add_class:"form-control" }}
+                    </div>
 
-                {% csrf_token %}
-                <button class="btn btn-primary">Create account</button>
-                <a href="{% url 'Generator:login' %}" class="btn btn-secondary">Back to login</a>
-            </form>
+                    <!-- CSRF token for security -->
+                    {% csrf_token %}
+                    <!-- Submit button -->
+                    <button class="btn btn-primary">Create account</button>
+                    <!-- Link back to login page -->
+                    <a href="{% url 'Generator:login' %}" class="btn btn-secondary">Back to login</a>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}
-</div>

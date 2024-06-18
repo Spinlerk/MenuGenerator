@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
-{% block title %} Log out {% endblock %}
-{% load static %}
+
+{% block title %} Log out {% endblock %}  {# Sets the title of the page displayed in the browser tab #}
+
+{% load static %}  {# Loads the static files template tag library for handling static files #}
+
 {% block content %}
     <style>
         body::after {
             content: "";
             background-image: url("{% static 'images/logged_out-bckgr.jpg' %}");
-            background-size: cover ;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.5;
@@ -18,10 +21,10 @@
             z-index: -1;
         }
     </style>
-    <h1>Logged out</h1>
+    <h1>Logged out</h1>  {# Main heading indicating the user has logged out #}
 
     <p>
         You have been successfully logged out.
-        <a href="{% url 'Generator:login' %}">Back to login</a>
+        <a href="{% url 'Generator:login' %}">Back to login</a>  {# Provides a link back to the login page #}
     </p>
 {% endblock %}

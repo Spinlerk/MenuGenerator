@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
-{% load static %}
-{% block title %} Dashboard {% endblock %}
+
+{% load widget_tweaks %}  {# Loads the widget tweaks library for form styling #}
+{% load static %}  {# Loads the static files template tag library for handling static files #}
+
+{% block title %} Dashboard {% endblock %}  {# Sets the title of the page displayed in the browser tab #}
 
 {% block content %}
     <style>
@@ -19,10 +21,12 @@
             z-index: -1;
         }
     </style>
+
     <header class="text-center my-4">
         <h1> Menu creator </h1>
         <hr class="hr">
-    </header>    
+    </header>
+
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
             <h2 class="text-center">Login page</h2>
@@ -31,8 +35,27 @@
                 <div class="mb-3">
                     {{ form.username.errors }}
                     <label class="mb-1" for="{{ form.username.id_for_label }}">Username</label>
-                    {{ form.username|add_class:"form-control" }}
+                    {{ form.username|add_class:"form-control" }}  {# Renders the username field with Bootstrap form-control class #}
                 </div>
+
+                <div class="mb-3">
+                    {{ form.password.errors }}
+                    <label class="mb-1" for="{{ form.password.id_for_label }}">Password</label>
+                    {{ form.password|add_class:"form-control" }}  {# Renders the password field with Bootstrap form-control class #}
+                </div>
+
+                {% csrf_token %}  {# CSRF token for security #}
+                <input type="hidden" name="next" value="{{ next }}">  {# Hidden input field to redirect user after login #}
+
+                <div class="d-flex flex-column gap-2">
+                    <button class="btn btn-primary">Login</button>  {# Login button with primary Bootstrap styling #}
+                    <a href="{% url 'Generator:register' %}" class="btn btn-success">Don't have an account yet?</a>  {# Link to registration page with success Bootstrap styling #}
+                    <a href="{% url 'Generator:password_reset' %}" class="btn btn-danger">Reset your password</a>  {# Link to password reset page with danger Bootstrap styling #}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
 
                 <div class="mb-3">
                     {{ form.password.errors }}
