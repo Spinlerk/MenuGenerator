@@ -326,11 +326,12 @@ def delete_user_side_dish(request, id):
     return HttpResponse("ok")
 
 
-"""views for Daily menu"""
+
 
 
 @login_required
 def create_daily_menu(request):
+    """view for Daily menu"""
     if request.method == "POST":
         # Processing of the submitted form
         today = timezone.now()
@@ -390,7 +391,10 @@ def create_daily_menu(request):
 
             if index < len(side_dishes):
                 # Checks if the current index is less than the length of the side_dishes list.
-                text = f"{text}, {side_dishes[index]}"
+                if side_dishes[index] == "":
+                    text = f"{text} {side_dishes[index]}"
+                else:
+                    text = f"{text}, {side_dishes[index]}"
 
             main_courses_with_dishes.append(text)
 

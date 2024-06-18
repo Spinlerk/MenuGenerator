@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, Client
 from .models import UserSoup, UserMainCourse, UserSalad, UserSideDishes
 from django.urls import reverse
 from Generator.forms import (
@@ -8,6 +8,7 @@ from Generator.forms import (
     UserSaladForm,
     UserSideDishesForm,
     UserSoupForm,
+    UserRegistrationForm,
 )
 
 """Tests for user model creation and its properties"""
@@ -245,3 +246,90 @@ class MenuTemplatesTestCase(TestCase):
         self.assertContains(response, "Grilled Chicken")
         self.assertContains(response, "Caesar Salad")
         self.assertContains(response, "French fries")
+
+
+class TestViews(TestCase):
+
+    def setUp(self):
+        """Setup method to create a client and a test user"""
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="testuser", password="testpassword"
+        )
+        self.client.login(username="testuser", password="testpassword")
+
+    def test_index_view(self):
+        """Test to verify the dashboard view loads correctly"""
+        response = self.client.get(reverse("Generator:dashboard"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "dashboard.html")
+
+    def test_register_view_get(self):
+        """Test to verify the GET request for the register view"""
+        response = self.client.get(reverse("Generator:register"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "account/register.html")
+        self.assertIsInstance(response.context["form"], UserRegistrationForm)
+
+    def test_register_view_post_valid(self):
+        """Test to verify the POST request for the register view with valid data"""
+        data = {
+            "username": "newuser",
+            "email": "newuser@example.com",
+            "first_name": "New",
+            "password": "newpassword",
+            "password2": "newpassword",
+        }
+        response = self.client.post(reverse("Generator:register"), data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "account/register_done.html")
+        self.assertIsInstance(response.context["new_user"], User)
+
+    def test_user_main_courses_view(self):
+        """Test to verify the main courses view for a user"""
+        UserMainCourse.objects.create(name="Course 1", user=self.user)
+        UserMainCourse.objects.create(name="Course 2", user=self.user)
+
+        response = self.client.get(reverse("Generator:main_courses"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, "user_database_interface/user_main_courses.html"
+        )
+        self.assertEqual(len(response.context["main_courses"]), 2)
+
+    def test_add_main_course_view_get(self):
+        """Test to verify the GET request for adding a main cour"""
+        response = self.client.get(reverse("Generator:add_main_course"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, "user_database_interface/add_main_course.html"
+        )
+        self.assertIsInstance(response.context["form"], UserMainCourseForm)
+
+    def test_add_main_course_view_post_valid(self):
+        """Test to verify the POST request for adding a main course with valid data"""
+        data = {"name": "New Course", "description": "Description of new course"}
+        response = self.client.post(reverse("Generator:add_main_course"), data)
+        self.assertEqual(response.status_code, 302)  # Should redirect
+        self.assertEqual(UserMainCourse.objects.filter(name="New Course").count(), 1)
+
+    def test_edit_user_main_course_view_post_valid(self):
+        """Test to verify the POST request for editing a main course with valid data"""
+        course = UserMainCourse.objects.create(name="Course", user=self.user)
+        data = {"name": "Edited Course", "description": "Edited description"}
+        response = self.client.post(
+            reverse("Generator:edit_main_course", args=[course.id]), data
+        )
+        self.assertEqual(response.status_code, 302)  # Should redirect
+        course.refresh_from_db()
+        self.assertEqual(course.name, "Edited Course")
+
+    def test_user_soups_view(self):
+        """Test to verify the soups view for a user"""
+        UserSoup.objects.create(name="Soup 1", user=self.user)
+        UserSoup.objects.create(name="Soup 2", user=self.user)
+
+        response = self.client.get(reverse("Generator:soups"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "user_database_interface/user_soups.html")
+        self.assertEqual(len(response.context["soups"]), 2)

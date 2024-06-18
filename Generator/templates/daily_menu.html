@@ -6,6 +6,7 @@
 <head>
     <title>Daily Menu</title>
     <style>
+        /* Add a background image to the body element */
         body::after {
             content: "";
             background-image: url("{% static 'images/daily_menu_bckgr.jpg' %}");
@@ -17,18 +18,25 @@
             height: 100%;
             position: fixed;
             top: 0;
-            left:0;
+            left: 0;
             z-index: -1;
-        }   
+        }
     </style>
+    <!-- Meta tag to ensure proper rendering and touch zooming on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Font for custom font style -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <!-- Link to the main CSS stylesheet -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery UI CSS for autocomplete functionality -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- jQuery UI library for autocomplete functionality -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script>
         $(function() {
+            // Autocomplete arrays for each type of menu item
             var soups = [
                 {% for soup in soups %}
                     "{{ soup.name }}"{% if not forloop.last %},{% endif %}
@@ -50,6 +58,7 @@
                 {% endfor %}
             ];
 
+            // Apply autocomplete to the input fields
             $(".soup-input").autocomplete({
                 source: soups
             });
@@ -64,21 +73,20 @@
             });
         });
     </script>
-        
 </head>
+
 <body>
 <div class="centered-content">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6">          
+        <div class="col-12 col-md-6">
             <h1>Daily Menu</h1>
-            
-            
+            <!-- Form to create or edit the daily menu -->
             <form method="post">
                 {% csrf_token %}
-            
+                <!-- Input for soup -->
                 <h2>Soup</h2>
                 <input type="text" name="soup" class="input-field soup-input" value="{% if soup %}{{ soup.name }}{% endif %}" placeholder="Add a soup">
-            
+                <!-- Input list for main courses and their side dishes -->
                 <h2>Main Courses</h2>
                 <ul>
                     {% for main_course in main_courses %}
@@ -88,17 +96,21 @@
                         </li>
                     {% endfor %}
                 </ul>
-            
+                <!-- Input for salad -->
                 <h2>Salad</h2>
                 <input type="text" name="salad" class="input-field salad-input" value="{% if salad %}{{ salad.name }}{% endif %}" placeholder="Add a salad">
+                <!-- Submit button and link to go back to the dashboard -->
                 <div class="button-container">
                     <button type="submit">Save Menu</button>
                     <a href="{% url 'Generator:dashboard' %}" class="btn btn-secondary">Back</a>
-                </div>    
+                </div>
             </form>
         </div>
     </div>
+</div>
 </body>
+
 </html>
+
     
     
