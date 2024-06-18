@@ -12,6 +12,7 @@ from Generator.forms import (
 
 """Tests for user model creation and its properties"""
 
+
 class TestUserModel(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -120,6 +121,7 @@ class MenuViewsTestCase(TestCase):
             name="French fries", user=self.user
         )
         """Tests the GET and POST requests for creating a daily menu."""
+
     def test_create_daily_menu_view_get(self):
         # Test get request to create daily menu view
         response = self.client.get(reverse("Generator:create_daily_menu"))

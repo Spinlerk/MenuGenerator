@@ -57,20 +57,3 @@
     </div>
 {% endblock %}
 
-                <div class="mb-3">
-                    {{ form.password.errors }}
-                    <label class="mb-1" for="{{ form.password.id_for_label }}">Password</label>
-                    {{ form.password|add_class:"form-control" }}
-                </div>
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ next }}">
-                <div class="d-flex flex-column gap-2">
-                    <button class="btn btn-primary">Login</button>
-                    <a href="{% url 'Generator:register' %}" class="btn btn-success">Don´t have an account
-                        yet?</a>
-                    <a href="{% url 'Generator:password_reset' %}" class="btn btn-danger">Reset your password</a>
-                </div>
-            </form>
-        </div>
-    </div>
-{% endblock %}

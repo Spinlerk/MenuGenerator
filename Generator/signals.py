@@ -1,3 +1,7 @@
+"""Signals clones the central databases when new user is created,
+central database has predefined courses but each user can manage the database by
+their own specific way they can add, edit, delete."""
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
@@ -13,9 +17,6 @@ from .models import (
     Profile,
 )
 
-"""Signals clones the central databases when new user is created, 
-central database has predefined courses but each user can manage the database by 
-their own specific way they can add, edit, delete."""
 
 
 
@@ -26,12 +27,13 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 
-""" This function clones all items from a central model to the corresponding user-specific model
-when a new user is created. It checks if the user is not a superuser and then iterates over all central items,
-creating corresponding user-specific items."""
+
 
 
 def clone_items(sender, instance, created, model_class, user_model_class):
+    """This function clones all items from a central model to the corresponding user-specific model
+    when a new user is created. It checks if the user is not a superuser and then iterates over all central items,
+    creating corresponding user-specific items."""
     if created and not instance.is_superuser:
         central_items = model_class.objects.all()
         for central_item in central_items:
@@ -43,6 +45,7 @@ def clone_items(sender, instance, created, model_class, user_model_class):
 
 
 """Signal receivers to clone items from central tables to user-specific tables when a new user is created."""
+
 
 @receiver(post_save, sender=User)
 def clone_main_courses(sender, instance, created, **kwargs):

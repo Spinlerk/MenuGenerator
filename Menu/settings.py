@@ -143,4 +143,3 @@ LOGIN_URL = "Generator:login"
 LOGOUT_URL = "Generator:logout"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-

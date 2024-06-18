@@ -5,7 +5,6 @@
 
 <head>
     <title>Daily Menu</title>
-    <!-- Styling for background image -->
     <style>
         body::after {
             content: "";
@@ -18,40 +17,18 @@
             height: 100%;
             position: fixed;
             top: 0;
-            left: 0;
+            left:0;
             z-index: -1;
-        }
-
-        /* Additional styles for input fields and button container */
-        .centered-content {
-            margin-top: 50px; /* Adjust as needed */
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .button-container {
-            margin-top: 20px;
-        }
+        }   
     </style>
-    <!-- Meta tags and external resources -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <!-- JavaScript for autocomplete functionality -->
     <script>
-        $(function () {
-            // Define arrays for autocomplete data
+        $(function() {
             var soups = [
                 {% for soup in soups %}
                     "{{ soup.name }}"{% if not forloop.last %},{% endif %}
@@ -73,7 +50,6 @@
                 {% endfor %}
             ];
 
-            // Initialize autocomplete for respective input fields
             $(".soup-input").autocomplete({
                 source: soups
             });
@@ -88,58 +64,41 @@
             });
         });
     </script>
-
+        
 </head>
-
 <body>
-<!-- Main content section -->
 <div class="centered-content">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6">          
             <h1>Daily Menu</h1>
-
-            <!-- Form for submitting the daily menu -->
+            
+            
             <form method="post">
                 {% csrf_token %}
-
-                <!-- Input field for Soup -->
+            
                 <h2>Soup</h2>
-                <input type="text" name="soup" class="input-field soup-input"
-                       value="{% if soup %}{{ soup.name }}{% endif %}" placeholder="Add a soup">
-
-                <!-- List of Main Courses -->
+                <input type="text" name="soup" class="input-field soup-input" value="{% if soup %}{{ soup.name }}{% endif %}" placeholder="Add a soup">
+            
                 <h2>Main Courses</h2>
                 <ul>
                     {% for main_course in main_courses %}
                         <li class="main-course-container">
-                            <!-- Input field for each Main Course -->
-                            <input type="text" name="main_course_{{ forloop.counter }}"
-                                   class="input-field main-course-input" value="{{ main_course.name }}"
-                                   placeholder="Add a main course">
-                            <!-- Input field for associated Side Dish -->
-                            <input type="text" name="side_dish_{{ forloop.counter }}"
-                                   class="input-field side-dish-input" placeholder="Add a side dish">
+                            <input type="text" name="main_course_{{ forloop.counter }}" class="input-field main-course-input" value="{{ main_course.name }}" placeholder="Add a main course">
+                            <input type="text" name="side_dish_{{ forloop.counter }}" class="input-field side-dish-input" placeholder="Add a side dish">
                         </li>
                     {% endfor %}
                 </ul>
-
-                <!-- Input field for Salad -->
+            
                 <h2>Salad</h2>
-                <input type="text" name="salad" class="input-field salad-input"
-                       value="{% if salad %}{{ salad.name }}{% endif %}" placeholder="Add a salad">
-
-                <!-- Button container for form submission and navigation -->
+                <input type="text" name="salad" class="input-field salad-input" value="{% if salad %}{{ salad.name }}{% endif %}" placeholder="Add a salad">
                 <div class="button-container">
                     <button type="submit">Save Menu</button>
                     <a href="{% url 'Generator:dashboard' %}" class="btn btn-secondary">Back</a>
-                </div>
+                </div>    
             </form>
         </div>
     </div>
-</div>
 </body>
-
 </html>
-
     
     

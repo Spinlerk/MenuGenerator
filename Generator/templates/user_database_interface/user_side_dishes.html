@@ -37,30 +37,3 @@
 
 
 
-
-<ul class="pagination mt-4">
-        {% if side_dishes.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ side_dishes.previous_page_number }}">Previous</a>
-            </li>
-        {% endif %}
-    
-        {% for num in side_dishes.paginator.page_range %}
-            {% if side_dishes.number == num %}
-                <li class="page-item active">
-                    <a class="page-link" href="#">{{ num }}</a>
-                </li>
-            {% elif num > side_dishes.number|add:'-3' and num < side_dishes.number|add:'3' %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    
-        {% if side_dishes.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ side_dishes.next_page_number }}">Next</a>
-            </li>
-        {% endif %}
-    </ul>
-{% endblock %}

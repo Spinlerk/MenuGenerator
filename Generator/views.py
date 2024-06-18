@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,6 @@ from .forms import (
     UserSaladForm,
     UserSideDishesForm,
 )
-from django.contrib.auth.views import LoginView
 
 
 """Views for user main courses"""
@@ -21,7 +21,6 @@ from django.contrib.auth.views import LoginView
 def index(request):
     """Renders the dashboard for logged-in users"""
     return render(request, "dashboard.html")
-
 
 
 def register(request):
@@ -112,6 +111,7 @@ def edit_user_main_courses(request, id):
 
 
 """ delete modal"""
+
 
 @login_required
 def delete_user_main_course(request, id):
@@ -341,7 +341,6 @@ def create_daily_menu(request):
         side_dish_2_name = request.POST.get("side_dish_2")
         salad_name = request.POST.get("salad")
 
-
         """ If the item doesn't exist in database, it will be created and added to the database '"""
         # Updating last used date or creating soup
         if soup_name:
@@ -351,7 +350,7 @@ def create_daily_menu(request):
             soup.last_used = today
             soup.save()
         else:
-            soup = None # if item would not be inputted it will be set up as none
+            soup = None  # if item would not be inputted it will be set up as none
 
         # Updating last used date or creating main dishes and side dishes
         main_courses = []
@@ -404,19 +403,25 @@ def create_daily_menu(request):
         return render(request, "daily_menu_complete.html", context)
 
     """Default view - generating the longest unused dishes"""
-    soup = UserSoup.objects.filter(last_used__isnull=True).first()  # taking the never used soup or last used soup
+    soup = UserSoup.objects.filter(
+        last_used__isnull=True
+    ).first()  # taking the never used soup or last used soup
     if not soup:
         soup = UserSoup.objects.order_by("last_used").first()
 
-    main_courses = list(UserMainCourse.objects.filter(last_used__isnull=True)[:2])  # gets and stores up to 2 instances
-    if len(main_courses) < 2:   # check if main curses list contains less than 2 items
+    main_courses = list(
+        UserMainCourse.objects.filter(last_used__isnull=True)[:2]
+    )  # gets and stores up to 2 instances
+    if len(main_courses) < 2:  # check if main curses list contains less than 2 items
         additional_courses = list(
             UserMainCourse.objects.order_by("last_used")[: 2 - len(main_courses)]
             # if main_courses has less than 2 entries, it gets additional courses.
         )
         main_courses.extend(additional_courses)
 
-    salad = UserSalad.objects.filter(last_used__isnull=True).first()  # taking the never used soup or last used salad
+    salad = UserSalad.objects.filter(
+        last_used__isnull=True
+    ).first()  # taking the never used soup or last used salad
     if not salad:
         salad = UserSalad.objects.order_by("last_used").first()
 
@@ -437,6 +442,7 @@ def create_daily_menu(request):
 
 class CustomLoginView(LoginView):
     """Custom login view to redirect authenticated users to dashboard if they try to go to login page"""
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect("Generator:dashboard")
