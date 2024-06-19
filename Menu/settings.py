@@ -27,11 +27,7 @@ SECRET_KEY = "django-insecure-^r7kqh%%_7wpcf=vj&&$+ni)nss0qh)t^$bgl^04&t@772y&b6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    'menu-creator-two.vercel.app',
-    'menu-creator-spinlerks-projects.vercel.app',
-    'menu-creator-git-main-spinlerks-projects.vercel.app'
-]
+ALLOWED_HOSTS = ['menu-creator.vercel.app']
 
 
 # Application definition
