@@ -1,9 +1,13 @@
 from django.contrib import admin
 from .models import (
     CentralMainCourse,
+    UserMainCourse,
     CentralSoup,
+    UserSoup,
     CentralSalad,
+    UserSalad,
     CentralSideDishes,
+    UserSideDishes,
 )
 from .models import Profile
 
