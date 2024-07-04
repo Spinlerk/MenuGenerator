@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import UserMainCourse, UserSalad, UserSideDishes, UserSoup
+from .models import UserMainCourse, UserSalad, UserSideDishes, UserSoup, Profile
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -54,3 +54,12 @@ class SideDishForm(forms.ModelForm):
     class Meta:
         model = UserSideDishes
         fields = ["side_dish"]
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["date_of_birth", "photo"]
+
+        widgets = {
+            "date_of_birth": forms.DateInput(attrs={"class": "form-control"}),
+        }

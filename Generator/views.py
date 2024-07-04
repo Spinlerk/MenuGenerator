@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils import timezone
@@ -10,7 +11,7 @@ from .forms import (
     UserMainCourseForm,
     UserSoupForm,
     UserSaladForm,
-    UserSideDishesForm,
+    UserSideDishesForm, ProfileEditForm,
 )
 
 
@@ -451,3 +452,24 @@ class CustomLoginView(LoginView):
         if request.user.is_authenticated:
             return redirect("Generator:dashboard")
         return super().dispatch(request, *args, **kwargs)
+
+
+
+def user_list(request):
+    users = User.objects.select_related('profile').all()
+    return render(request, 'user_list.html', {"users": users})
+
+def user_detail(request, id):
+    user = get_object_or_404(User.objects.select_related('profile'), id=id)
+
+    if request.method == 'POST':
+        profile_form = ProfileEditForm(
+            instance=user.profile,
+            data=request.POST,
+            files=request.FILES)
+        if profile_form.is_valid():
+            profile_form.save()
+    else:
+        profile_form = ProfileEditForm(instance=user.profile)
+
+    return render(request, 'user_detail.html', {"profile_form": profile_form})

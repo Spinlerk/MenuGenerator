@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <h1 class="mb-3">Users</h1>
+
+            <ul class="list-group">
+                {% for user in users %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center" style="gap: 0.5rem">
+                            {% if user.profile.photo %}
+                                <img src="{{ user.profile.photo.url }}" class="rounded" alt="Avatar" width="50"/>
+                            {% else %}
+                                <img src="{% static 'images/default-avatar.png' %}" class="rounded" alt="Default Avatar" width="50"/>
+                            {% endif %}
+                            <div>{{ user.username }}</div>
+                        </div>
+                        <a href="{% url 'Generator:user_detail' user.id %}" class="btn btn-primary">Edit</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
