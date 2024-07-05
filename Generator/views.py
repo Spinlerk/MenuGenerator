@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import UserMainCourse, UserSoup, UserSalad, UserSideDishes
@@ -10,7 +12,7 @@ from .forms import (
     UserMainCourseForm,
     UserSoupForm,
     UserSaladForm,
-    UserSideDishesForm,
+    UserSideDishesForm, ProfileEditForm, UserEditForm,
 )
 
 
@@ -451,3 +453,41 @@ class CustomLoginView(LoginView):
         if request.user.is_authenticated:
             return redirect("Generator:dashboard")
         return super().dispatch(request, *args, **kwargs)
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('Generator:dashboard')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'edit_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+@staff_member_required
+def user_list(request):
+    users = User.objects.all()
+    return render(request, 'user_list.html', {"users": users})
+
+def user_detail(request, id):
+    user = get_object_or_404(User.objects.select_related('profile'), id=id)
+
+    if request.method == 'POST':
+        profile_form = ProfileEditForm(
+            instance=user.profile,
+            data=request.POST,
+            files=request.FILES)
+        if profile_form.is_valid():
+            profile_form.save()
+    else:
+        profile_form = ProfileEditForm(instance=user.profile)
+
+    return render(request, 'user_detail.html', {"profile_form": profile_form})

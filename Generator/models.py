@@ -6,13 +6,18 @@ from django.db.models.functions import Lower
 
 
 class Profile(models.Model):
-    """A testing model that extends the User model with a one-to-one relationship.
-    The Profile model is linked directly to the Django User model."""
+    """
+    User profile model
+    A testing model that extends the User model with a one-to-one relationship.
+    The Profile model is linked directly to the Django User model.
+    """
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to="users/%Y/%m/%d/", blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return f"Profile of {self.user.username}"
 
 
 class BaseCourse(models.Model):

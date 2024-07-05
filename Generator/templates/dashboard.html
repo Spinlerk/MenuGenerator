@@ -1,8 +1,7 @@
-{% extends 'base.html' %}  <!-- Extend base.html template -->
+{{% extends 'base.html' %}
+{% load static %}
 
-{% load static %}  <!-- Load static files -->
-
-{% block title %}Dashboard{% endblock %}  <!-- Set the title of the page -->
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
     <style>
@@ -22,62 +21,83 @@
         }
     </style>
 
-    <div class="d-flex justify-content-between">
-        <h1>Welcome {{ user.username }}, in Menu Creator!</h1> <!-- Display welcome message with username -->
-        <form action="{% url 'Generator:logout' %}" method="post"> <!-- Logout form -->
-            {% csrf_token %} <!-- CSRF token for security -->
-            <button class="btn btn-primary">Log out</button> <!-- Logout button -->
-            <a href="{% url 'Generator:password_change' %}" class="change-password-link">Change password</a> <!-- Change password link -->
-        </form>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Welcome {{ user.username }}, in Menu Creator!</h1>
+
+        <!-- Form container for buttons -->
+        <div class="d-flex">
+            <!-- Edit profile button -->
+            <form action="{% url 'Generator:edit_profile' %}" method="post" class="button-container">
+                {% csrf_token %}
+                <button class="btn btn-secondary" style="margin-right: 10px;">Edit profile</button>
+            </form>
+
+            <!-- Logout button and change password link -->
+            <form action="{% url 'Generator:logout' %}" method="post" class="button-container">
+                {% csrf_token %}
+                <button class="btn btn-primary" style="margin-left: 10px;">Log out</button>
+                <a href="{% url 'Generator:password_change' %}" class="change-password-link ml-2">Change password</a>
+            </form>
+        </div>
     </div>
 
-    <hr class="hr"> <!-- Horizontal rule -->
+    <hr class="hr">
 
-    <h2 class="mt-4 text-center">Manage your database</h2> <!-- Section title -->
+    <!-- User profile photo -->
+    <div class="d-flex justify-content-center align-items-center mt-3 mb-4">
+        {% if user.profile.photo %}
+            <img src="{{ user.profile.photo.url }}" class="rounded-circle" alt="Profile Photo" width="150" height="150">
+        {% else %}
+            <img src="{% static 'images/default-avatar.png' %}" class="rounded-circle" alt="Default Profile Photo" width="150" height="150">
+        {% endif %}
+    </div>
 
-    <div class="d-flex justify-content-center flex-wrap gap-3">
+    <h2 class="mt-4 text-center">Manage your database</h2>
+
+    <!-- Manage database cards -->
+    <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
         <!-- Main course card -->
         <div class="card">
-            <img src="{% static 'images/main_courses.jpg' %}" class="card-img-top" alt="Main Courses"> <!-- Main courses image -->
+            <img src="{% static 'images/main_courses.jpg' %}" class="card-img-top" alt="Main Courses">
             <div class="card-body">
-                <a href="{% url 'Generator:main_courses' %}" class="btn btn-primary">Main Courses</a> <!-- Link to manage main courses -->
+                <a href="{% url 'Generator:main_courses' %}" class="btn btn-primary">Main Courses</a>
             </div>
         </div>
 
         <!-- Soups card -->
         <div class="card">
-            <img src="{% static 'images/soups.jpg' %}" class="card-img-top" alt="Soups"> <!-- Soups image -->
+            <img src="{% static 'images/soups.jpg' %}" class="card-img-top" alt="Soups">
             <div class="card-body">
-                <a href="{% url 'Generator:soups' %}" class="btn btn-primary">Soups</a> <!-- Link to manage soups -->
+                <a href="{% url 'Generator:soups' %}" class="btn btn-primary">Soups</a>
             </div>
         </div>
 
         <!-- Salads card -->
         <div class="card">
-            <img src="{% static 'images/salads.jpg' %}" class="card-img-top" alt="Salads"> <!-- Salads image -->
+            <img src="{% static 'images/salads.jpg' %}" class="card-img-top" alt="Salads">
             <div class="card-body">
-                <a href="{% url 'Generator:salads' %}" class="btn btn-primary">Salads</a> <!-- Link to manage salads -->
+                <a href="{% url 'Generator:salads' %}" class="btn btn-primary">Salads</a>
             </div>
         </div>
 
         <!-- Side dish card -->
         <div class="card">
-            <img src="{% static 'images/side_dishes.jpg' %}" class="card-img-top" alt="Side Dishes"> <!-- Side dishes image -->
+            <img src="{% static 'images/side_dishes.jpg' %}" class="card-img-top" alt="Side Dishes">
             <div class="card-body">
-                <a href="{% url 'Generator:side_dishes' %}" class="btn btn-primary">Side Dishes</a> <!-- Link to manage side dishes -->
+                <a href="{% url 'Generator:side_dishes' %}" class="btn btn-primary">Side Dishes</a>
             </div>
         </div>
     </div>
 
-    <hr class="hr"> <!-- Horizontal rule -->
+    <hr class="hr">
 
-    <h2 class="mt-4 text-center">Generate your menu!</h2> <!-- Section title -->
-
-    <div class="d-flex justify-content-center">
+    <!-- Generate menu section -->
+    <h2 class="mt-4 text-center">Generate your menu!</h2>
+    <div class="d-flex justify-content-center mt-3">
         <div class="card">
-            <img src="{% static 'images/daily_menu.jpg' %}" class="card-img-daily_menu" alt="Generate Daily Menu"> <!-- Daily menu image -->
+            <img src="{% static 'images/daily_menu.jpg' %}" class="card-img-daily_menu" alt="Generate Daily Menu">
             <div class="card-body">
-                <a href="{% url 'Generator:create_daily_menu' %}" class="btn btn-success">Generate menu for the day</a> <!-- Link to generate daily menu -->
+                <a href="{% url 'Generator:create_daily_menu' %}" class="btn btn-success">Generate menu for the day</a>
             </div>
         </div>
     </div>
