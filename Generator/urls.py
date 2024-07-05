@@ -6,7 +6,6 @@ from django.contrib.auth.views import (
 from django.urls import path, include, reverse_lazy
 from . import views
 
-
 app_name = "Generator"
 
 PasswordChangeView.success_url = reverse_lazy("Generator:password_change_done")
@@ -14,7 +13,6 @@ PasswordResetView.success_url = reverse_lazy("Generator:password_change_done")
 PasswordResetConfirmView.success_url = reverse_lazy("Generator:password_reset_complete")
 
 urlpatterns = [
-    path("", views.user_list, name="user_list"),
     path("<int:id>", views.user_detail, name="user_detail"),
     path("login/", views.CustomLoginView.as_view(), name="login"),
     path("", include("django.contrib.auth.urls")),
@@ -43,4 +41,6 @@ urlpatterns = [
         name="delete_side_dish",
     ),
     path("create-daily_menu/", views.create_daily_menu, name="create_daily_menu"),
+    path("edit-profile/", views.edit_profile, name="edit_profile"),
+    path("user-list/", views.user_list, name="user_list"),
 ]

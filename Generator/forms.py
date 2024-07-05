@@ -55,10 +55,21 @@ class SideDishForm(forms.ModelForm):
         model = UserSideDishes
         fields = ["side_dish"]
 
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ["date_of_birth", "photo"]
+        fields = ["photo"]
 
         widgets = {
             "date_of_birth": forms.DateInput(attrs={"class": "form-control"}),
