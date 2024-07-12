@@ -1,0 +1,1 @@
+web: gunicorn MenuGenerator.wsgi --log-file -
