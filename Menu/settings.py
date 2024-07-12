@@ -26,7 +26,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', os.getenv("VERCEL_DOMAIN")]
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'menu-generator-ten.vercel.app',
+                 'menu-generator-git-main-spinlerks-projects.vercel.app',
+                 'menu-generator-6p6rmjhxv-spinlerks-projects.vercel.app',
+                 os.getenv("VERCEL_DOMAIN")]
 
 
 # Application definition
@@ -79,7 +82,6 @@ WSGI_APPLICATION = "Menu.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-load_dotenv()
 
 DATABASES = {
     "default": {
