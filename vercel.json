@@ -8,7 +8,7 @@
       }
     },
     {
-      "src": "Menu/wsgi.py",
+      "src": "/Menu/wsgi.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "15mb" }
     }
@@ -16,7 +16,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "Menu/wsgi.py"
+      "dest": "/Menu/wsgi.py"
     },
     {
       "src": "/static/(.*)",
