@@ -2,15 +2,19 @@
   "version": 2,
   "builds": [
     {
-      "src": "manage.py",
+      "src": "MenuGenerator/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb" }
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.11" }
     }
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "manage.py"
+      "dest": "MenuGenerator/wsgi.py"
     }
   ]
 }
