@@ -16,18 +16,21 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^r7kqh%%_7wpcf=vj&&$+ni)nss0qh)t^$bgl^04&t@772y&b6"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'menu-generator-ten.vercel.app',
+                 'menu-generator-git-main-spinlerks-projects.vercel.app',
+                 'menu-generator-6p6rmjhxv-spinlerks-projects.vercel.app',
+                 '.now.sh',
+                 os.getenv("VERCEL_DOMAIN")]
 
 
 # Application definition
@@ -79,7 +82,6 @@ WSGI_APPLICATION = "Menu.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-load_dotenv()
 
 DATABASES = {
     "default": {
@@ -132,6 +134,9 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
