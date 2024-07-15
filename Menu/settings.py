@@ -26,11 +26,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'menu-generator-ten.vercel.app',
-                 'menu-generator-git-main-spinlerks-projects.vercel.app',
-                 'menu-generator-6p6rmjhxv-spinlerks-projects.vercel.app',
-                 '.now.sh',
-                 os.getenv("VERCEL_DOMAIN")]
+ALLOWED_HOSTS = ['127.0.0.1',
+                 '.vercel.app',
+                 '.now.sh'
+                 ]
 
 
 # Application definition
