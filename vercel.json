@@ -17,6 +17,12 @@
       }
     }
   ],
+  "functions": {
+    "api": {
+      "runtime": "python3.9",
+      "maxDuration": 25
+    }
+  },
   "routes": [
     {
       "src": "/static/(.*)",
