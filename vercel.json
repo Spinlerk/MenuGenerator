@@ -18,9 +18,9 @@
     }
   ],
   "functions": {
-    "api": {
+    "api/*.py": {
       "runtime": "python3.9",
-      "maxDuration": 25
+      "maxDuration": 60
     }
   },
   "routes": [
