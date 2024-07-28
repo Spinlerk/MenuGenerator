@@ -17,17 +17,13 @@
       }
     }
   ],
-  "functions": {
-    "api/*.py": {
-      "runtime": "python3.9",
-      "maxDuration": 60
-    }
-  },
   "routes": [
     {
       "src": "/static/(.*)",
       "dest": "/$1"
     },
+
+
     {
       "src": "/(.*)",
       "dest": "Menu/wsgi.py"
