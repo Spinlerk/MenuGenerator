@@ -1,6 +1,24 @@
 # MenuCreator
+Menu Creator is a Django-based application for creating daily menus, managing user-specific soups, main courses, 
+salads, and side dishes.
 
-Menu Creator is a Django-based application for creating daily menus, managing user-specific soups, main courses, salads, and side dishes.
+# Please be aware!
+
+I'd like to point out that there's a certain imperfection in my live version on Vercel. 
+Specifically, during the registration of a new user 
+(since this process involves cloning the database from the central database), the registration takes longer. 
+Unfortunately, Vercel has a response timeout set to 10 seconds, so a 504: GATEWAY_TIMEOUT error appears. 
+However, the user is successfully registered and can log in with the provided credentials. 
+I have also set up an account for testing purposes, which can be accessed with the following credentials:
+
+Username: Tester
+Password: Tester123
+
+This issue is primarily caused by the fact that I am using the free, hobby plan on Vercel. 
+I can modify the code (I plan to optimize it), but the larger the database grows, the sooner this problem will reappear.
+
+
+
 
 ![main_menu](Screenshot.png)
 
