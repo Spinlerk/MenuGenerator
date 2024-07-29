@@ -9,9 +9,11 @@ Specifically, during the registration of a new user
 (since this process involves cloning the database from the central database), the registration takes longer. 
 Unfortunately, Vercel has a response timeout set to 10 seconds, so a 504: GATEWAY_TIMEOUT error appears. 
 However, the user is successfully registered and can log in with the provided credentials. 
+
 I have also set up an account for testing purposes, which can be accessed with the following credentials:
 
 Username: Tester
+
 Password: Tester123
 
 This issue is primarily caused by the fact that I am using the free, hobby plan on Vercel. 
